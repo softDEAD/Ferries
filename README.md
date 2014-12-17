@@ -5,10 +5,10 @@ TourSea
 * include setup instructions
 
 ##Roles:
-========
+=====
 
 ##Todo Timeline:
-=============
+=======
 
 APIs
 Google Maps
@@ -29,7 +29,7 @@ Html & CSS -
 
 
 ##Project Deadline:
-================
+=========
 
 ##Install Instructions:
-==================
+========
