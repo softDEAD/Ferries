@@ -1,17 +1,17 @@
-TourSea
+#TourSea
 =======
 * Update time line
 * Use branches
 * include setup instructions
 
-Roles:
+##Roles:
 ========
 
-Todo Timeline
+##Todo Timeline:
 =============
 
-Project Deadline
+##Project Deadline:
 ================
 
-Install Instructions
+##Install Instructions:
 ==================
