@@ -7,16 +7,18 @@ TourSea
 ##Roles:
 =====
 
+
 ##Todo Timeline:
 =======
 
-APIs
-Google Maps
-Flask -
-Database -
-JavaScript -
-geolocation
-Html & CSS -
+##APIs
+* Google Maps
+  *   
+* Flask -
+* Database -
+* JavaScript -
+* geolocation
+* Html & CSS -
 
 ##Has:
 * user login
