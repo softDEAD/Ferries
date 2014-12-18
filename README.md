@@ -1,5 +1,8 @@
 TourSea
 ====
+###Work in your branch not in master
+
+
 * Update time line
 * Use branches
 * include setup instructions
