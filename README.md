@@ -6,6 +6,7 @@ TourSea
 
 ##Roles:
 =====
+* Database - Eric Kolbusz
 
 
 ##Todo Timeline:
