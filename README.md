@@ -9,7 +9,10 @@ TourSea
 
 ##Roles:
 =====
+* Flask - David Bang
+* Javascript - Anish Malhotra
 * Database - Eric Kolbusz
+* API - Dionis Wang
 
 
 ##Todo Timeline:
