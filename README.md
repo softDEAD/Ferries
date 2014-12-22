@@ -1,11 +1,18 @@
 TourSea
 ====
+###Work in your branch not in master
+
+
 * Update time line
 * Use branches
 * include setup instructions
 
 ##Roles:
 =====
+* Flask - David Bang
+* Javascript - Anish Malhotra
+* Database - Eric Kolbusz
+* API - Dionis Wang
 
 
 ##Todo Timeline:
