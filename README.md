@@ -29,7 +29,8 @@ TourSea
 
 ##Has:
 * user login
-* Google maps and yelp? Recommend places based on interests
+* Google maps, Google places and  yelp? Recommend places based on interests
+* May use screen scraping to find very obsure locations
 * saving tours
 * modifying tours
 * tours tell length it will take and if the location is closed.
