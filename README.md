@@ -18,9 +18,9 @@ TourSea
 ##Todo Timeline:
 =======
 * Eric
-** by 1/10 - Account database
-** by 1/12 - Tour database
-** ??any other stuff
+ * by 1/10 - Account database
+ * by 1/12 - Tour database
+ * ??any other stuff
 
 ##APIs
 * Google Maps
