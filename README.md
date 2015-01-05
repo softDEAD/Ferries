@@ -17,6 +17,10 @@ TourSea
 
 ##Todo Timeline:
 =======
+* Eric
+ * by 1/10 - Account database
+ * by 1/12 - Tour database
+ * ??any other stuff
 
 ##APIs
 * Google Maps
@@ -29,7 +33,8 @@ TourSea
 
 ##Has:
 * user login
-* Google maps and yelp? Recommend places based on interests
+* Google maps, Google places and  yelp? Recommend places based on interests
+* May use screen scraping to find very obsure locations
 * saving tours
 * modifying tours
 * tours tell length it will take and if the location is closed.
