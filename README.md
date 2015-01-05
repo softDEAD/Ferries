@@ -21,6 +21,10 @@ TourSea
  * by 1/10 - Account database
  * by 1/12 - Tour database
  * ??any other stuff
+* David Bang
+ * by 1/11 - Set up framework for login, register, account specific pages
+ * by 1/13 - Connect pages with databases
+ * ??any other stuff
 
 ##APIs
 * Google Maps
