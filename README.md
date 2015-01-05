@@ -19,6 +19,10 @@ TourSea
 =======
 * Eric
  * by 1/10 - Account database
+  * user_auth(username, password)
+  * user_exists(username)
+  * user_creat(username, password)
+  * get_pass(username)
  * by 1/12 - Tour database
  * ??any other stuff
 * David Bang
