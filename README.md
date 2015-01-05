@@ -13,7 +13,7 @@ TourSea
 * Javascript - Anish Malhotra
 * Database - Eric Kolbusz
 * API - Dionis Wang
-
+* Algorithms for route suggestion
 
 ##Todo Timeline:
 =======
