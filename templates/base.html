@@ -7,13 +7,34 @@
       Title
       {% endblock title %}
     </title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/flatly/bootstrap.min.css">
   </head>
   <body>
-
-      </head>
-  <body>
-    {% block body %}
-    {% endblock body %}
-    
+    {% block navbar %}
+    <div class="navbar navbar-inverse">
+      <ul class="nav navbar-nav">
+	<li><a href="/">Home- Search Page</a></li>
+      </ul>
+    </div>
+    {% endblock navbar %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="flashed_messages_list">
+      {% for message in messages %}
+      <li class="flashed_message error">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <center>
+      <h1>
+	{% block header %}
+	Title Page
+	{% endblock header %}
+      </h1>
+      {% block body %}
+      this is the body
+      {% endblock body %}
+    </center>
   </body>
 </html>
