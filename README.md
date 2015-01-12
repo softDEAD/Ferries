@@ -29,6 +29,9 @@ Ferries
  * by 1/11 - Set up framework for login, register, account specific pages
  * by 1/13 - Connect pages with databases
  * ??any other stuff
+*Dionis Wang
+ * Start API after login is done.
+ * Finish API by 1/18
 
 ##APIs
 * Google Maps
