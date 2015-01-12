@@ -13,12 +13,14 @@ def user_auth(username, password):
 def user_exists(username):
     return users.find({'username':username}).count() > 0
 
-def user_creat(username, password, frees, lunch):
+def user_creat(username, password, frees, lunch, rep, ordersfulfilled):
     if (not user_exists(username)):
         new = { 'username' : username,
                 'password' : password,
                 'frees' : free,
-                'lunch' : lunch
+                'lunch' : lunch,
+		'rep' : 0,
+		'ordersfulfilled': 0
                 }
         users.insert(new)
         return "Registration successful"
@@ -48,9 +50,20 @@ def order_creat(orderid,username, store, food, cost,
     orders.insert(new)
     return "Order #%s created"%(orderid)
 
-def get_orders_store(store):
-    orders_store = orders.find({'store':store})
-    return [orders_store.count(), orders_store]
+def get_orders(stores,periods):
+    ret = []
+    if len(stores) == 0:
+        for period in periods:
+            ret.append(orders.find({'period':period}))
+    elif len(periods) == 0:
+        for store in stores:
+            ret.append(orders.find({'store':stores}))
+    else:
+        for store in stores:
+            for period in periods:
+                ret.append(orders.find({'store':store,
+                                        'period':period}))
+    return ret
 
 
 
