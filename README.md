@@ -23,9 +23,11 @@ Ferries
  * by 1/10 - Account database
   * user_auth(username, password)
   * user_exists(username)
-  * user_creat(username, password)
-  * get_pass(username)
+  * user_creat(username, password, frees, lunch, rep, ordersfulfilled)
+  * get_data(username,data)
  * by 1/12 - Order database
+  * order_creat(orderid,username, store, food, cost, offer, preferredperiod, otherperiods, instructions)
+  * get_orders(stores,periods)
  * ??any other stuff
 * David Bang
  * by 1/11 - Set up framework for login, register, account specific pages
