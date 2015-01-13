@@ -16,7 +16,6 @@ Ferries
 * Javascript - Anish Malhotra
 * Database - Eric Kolbusz
 * API - Dionis Wang
-* Algorithms for route suggestion
 
 ##Todo Timeline:
 =======
@@ -26,7 +25,7 @@ Ferries
   * user_exists(username)
   * user_creat(username, password)
   * get_pass(username)
- * by 1/12 - Tour database
+ * by 1/12 - Order database
  * ??any other stuff
 * David Bang
  * by 1/11 - Set up framework for login, register, account specific pages
@@ -39,22 +38,21 @@ Ferries
  * Javascript after others are done
 ##APIs
 * Google Maps
-  *   
 * Flask -
 * Database -
 * JavaScript -
-* geolocation
 * Html & CSS -
+####these aren't APIs what
 
 ##Has:
 * user login
 * Google maps, yelp? Recommend places based on interests
-* May use screen scraping to find very obsure locations
 * Allow users to add request for food.
-* Allow users to post 
+* Allow users to post
+* User profiles with rep and comments
 
 
-##Project Deadline:
+##Project Deadline: soon
 =========
 
 ##Install Instructions:
