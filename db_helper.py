@@ -52,8 +52,9 @@ def order_creat(orderid, username, store, food, cost,
             'offer' : offer,
             'preferredperiod' : preferredperiod,
             'otherperiods' : otherperiods,
-            'instructions' : instructions
-            } #how do we note that an order has been taken up by someone?
+            'instructions' : instructions,
+            'takenby' : None #when taken by someone (if not None) it displays as 'Taken by %s'
+            }
     orders.insert(new)
     return "Order #%s created"%(orderid)
 
