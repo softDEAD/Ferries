@@ -1,11 +1,12 @@
 from flask import Flask,request,url_for,redirect,render_template, flash, session
 import json, urllib2
-import functools import wraps
+from functools import wraps
 import db_helper as db
 
 app=Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
+global orderid
 
 @app.route("/", methods ["POST", "GET"])
 def index():
@@ -57,8 +58,44 @@ def register():
 @app.route("/profile", methods ["POST", "GET"])
 def profile():
     if ('username' in session):
+        username = session ['username']
+        return render_template ("profile.html", username = username, frees = db.get_data (username, frees), lunch = db.get_data (username, lunch), rep = db.get_data (username, rep), ordersp = db.get_data (username, ordersplaced), ordersf = db.get_data (username, ordersfulfilled), comments = db.get_data (username, comments));
+    else:
+        return redirect ("/login")
 
-    else
+@app.route("/oprofile", methods ["POST", "GET"])
+def otherprofile(username): ##links from other user
+    return render_template ("profile.html", username = username, frees = db.get_data (username, frees), lunch = db.get_data (username, lunch), rep = db.get_data (username, rep), ordersp = db.get_data (username, ordersplaced), ordersf = db.get_data (username, ordersfulfilled), comments = db.get_data (username, comments));
+
+@app.route("/placeorder", methods ["POST", "GET"])
+def placeorder():
+    submit = request.args.get("submit")
+    if (submit == "Submit"):
+        username = request.args.get("username")
+        orderid = orderid + 1
+        store = request.args.get("store")
+        cost = request.args.get("cost")
+        offer = request.args.get("offer")
+        period1 = request.args.get("period1")
+        period2 = request.args.get("period2")
+        instruction = request.args.get("instruction")
+        db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instruction)
+        return redirect ("/success")
+    if ('username' in session):
+        username = session ['username']
+        return render_template ("placeorder.html", username = username);
+    else:
+        return render_template ("/login")
+           
+@app.route("/orders", methods ["POST", "GET"])
+def loadorder():
+    return render_template ("loadorder.html")
+
+@app.route("/orderspec", methods ["POST", "GET"])
+def specorder(stores, periods): ## one is null or not
+    orders = get_orders (stores, period)
+    return render_template ("specorder.html", orders);
+    
 
 if __name__ == '__main__':
     app.debug = True
