@@ -4,7 +4,7 @@ from functools import wraps
 import db_helper as db
 
 app=Flask(__name__)
-app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'## will change to something more random
 
 global orderid
 
@@ -55,23 +55,41 @@ def register():
             return redirect ("/")
     return render_template ("register.html") #have a button that redirects to /
 
+@app.route("/homepage")
+def homepage ():
+    if ('username' not in session):
+        username = None
+    if (session.get('username') != None):
+        username = session ['username']
+        
+    search = request.args.get ("search")
+    if (search != None):
+        types = request.args.get ("types")
+        if (types == "username")
+
+        if (
+
+
+    return render_template ("homepage.html")
+        
 @app.route("/profile", methods ["POST", "GET"])
 def profile():
     if ('username' in session):
-        username = session ['username']
-        return render_template ("profile.html", username = username, frees = db.get_data (username, frees), lunch = db.get_data (username, lunch), rep = db.get_data (username, rep), ordersp = db.get_data (username, ordersplaced), ordersf = db.get_data (username, ordersfulfilled), comments = db.get_data (username, comments));
+        data = db.get_all_user_data (username)
+        return render_template ("profile.html", data=data)
     else:
         return redirect ("/login")
 
 @app.route("/oprofile", methods ["POST", "GET"])
 def otherprofile(username): ##links from other user
-    return render_template ("profile.html", username = username, frees = db.get_data (username, frees), lunch = db.get_data (username, lunch), rep = db.get_data (username, rep), ordersp = db.get_data (username, ordersplaced), ordersf = db.get_data (username, ordersfulfilled), comments = db.get_data (username, comments));
+    data = db.get_all_user_data (username)
+    return render_template ("profile.html", data = data)
 
 @app.route("/placeorder", methods ["POST", "GET"])
 def placeorder():
     submit = request.args.get("submit")
     if (submit == "Submit"):
-        username = request.args.get("username")
+        username = session ['username']
         orderid = orderid + 1
         store = request.args.get("store")
         cost = request.args.get("cost")
@@ -79,7 +97,7 @@ def placeorder():
         period1 = request.args.get("period1")
         period2 = request.args.get("period2")
         instruction = request.args.get("instruction")
-        db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instruction)
+        db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instruction) ## need error checking here
         return redirect ("/success")
     if ('username' in session):
         username = session ['username']
@@ -87,15 +105,23 @@ def placeorder():
     else:
         return render_template ("/login")
            
-@app.route("/orders", methods ["POST", "GET"])
-def loadorder():
-    return render_template ("loadorder.html")
 
-@app.route("/orderspec", methods ["POST", "GET"])
-def specorder(stores, periods): ## one is null or not
-    orders = get_orders (stores, period)
-    return render_template ("specorder.html", orders);
+@app.route("/searchorder", methods ["POST", "GET"])
+def searchorder(stores, periods): ## one is null or not
+    orders = db.get_orders (stores, period)
+    ret = []
+    for s in orders:
+        ret.append(db.get_all_order_data(s))
+    return render_template ("searchorder.html", ret = ret) ## lists of list of orders
     
+@app.route ("/success")
+def success():
+    return render_template ("success.html")
+
+@app.route ("/yelp")
+def yelp ():
+    return render_template("yelp.html")
+
 
 if __name__ == '__main__':
     app.debug = True
