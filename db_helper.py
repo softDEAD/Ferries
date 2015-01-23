@@ -20,9 +20,9 @@ def user_creat(username, password): #string, string
                 'frees' : free,
                 'lunch' : lunch,
 		'rep' : 0,
-                'ordersplaced' : 0,
-		'ordersfulfilled' : 0,
-                'profilecomments' : []
+                'ordersplaced' : [],
+		'ordersfulfilled' : [],
+                'profilecomments' : [],
                 'pendingorders' : []
                 }
         users.insert(new)
@@ -33,28 +33,39 @@ def change_frees(username, frees): #string, list
     user = users.find_one({'username':username})
     users.update(
         {'username' : username},
-        {"$set": {'frees': frees}},
+        {"$set" : {'frees':frees}},
         upsert = True)
 
 def change_lunch(username, lunch): #string, int
     user = users.find_one({'username':username})
     users.update(
         {'username' : username},
-        {"$set": {'lunch': lunch}},
+        {"$set" : {'lunch':lunch}},
         upsert = True)
     
-def get_data(username, data): #string, string
+def get_user_data(username, data): #string, string
     user = users.find_one({'username':username})
     if (user != None):
         if data in user:
             return user[data]
-        return "No %s data for user %s."%(data,username)
+    return "No %s data for user %s."%(data,username)
+
+def get_all_user_data(username): #string
+    user = users.find_one({'username':username})
+    ret = []
+    if (user != None):
+        for var in user:
+            if (var != "password"): #privacy is cool
+                ret.append(var)
+    return ret
 
 def profile_comment(username, comment): #string, string
-    user = users.findone({'username':username})
+    user = 
     comments = user['profilecomments']
-    comments.append(comment)
-    
+    users.update(
+        {'username' : username},
+        {"$set" : {'profilecomments':comments.append(comment)}},
+        upsert = True)
 #-----ORDERS-----
 def order_creat(orderid, username, store, food, cost,
                 offer, preferredperiod,
@@ -70,16 +81,31 @@ def order_creat(orderid, username, store, food, cost,
             'instructions' : instructions,
             'takenby' : None #when taken by someone (if not None) it displays as 'Taken by %s'
             }
-    orders.insert(new)
-
-    #adding 1 to orders created
-    ################################spammable??
-    user = users.find_one({'username':username})
+    user = users.findone({'username':username})
+    userorders = users['ordersplaced']
+    userorders.append(orderid)
     users.update(
         {'username' : username},
-        {"$set" : {'ordersplaced' : user['ordersplaced']+1}},
-        upsert = True)#just in case
+        {"$set" : {'ordersplaced':userorders}},
+        upsert = True)
+    orders.insert(new)
+    ################################spammable??
     return "Order #%s created"%(orderid)
+
+def get_order_data(orderid, data): #int, string
+    order = orders.find_one({'orderid':orderid})
+    if (order != None):
+        if data in order:
+            return order[data]
+    return "No %s data for order %d."%(data,orderid)
+
+def get_all_order_data(orderid): #int
+    order = orders.find_one({'orderid':orderid})
+    ret = []
+    if (order != None):
+        for var in order:
+            ret.append(var)
+    return ret
 
 def get_orders(stores, periods): #list, list
     ret = [] #returns list of orderids
@@ -108,9 +134,11 @@ def order_fulfill(orderid): #int
     user = order['takenby']
     if not user_exists(user):
         return "Error, user not found"
+    userfulfilled = user['ordersfulfilled']
+    userfulfilled.append(orderid)
     users.update(
         {'username' : username},
-        {"$set" : {'ordersfulfilled' : user['ordersfulfilled']+1}},
+        {"$set" : {'ordersfulfilled':userfulfilled}},
         upsert = True)
     orders.remove(order)
 
@@ -123,14 +151,13 @@ def take_order(username, orderid): #string, string
     pendingorders.append(orderid)
     users.update(
         {'username' : username},
-        {"$set" : {'pendingorders' : pendingorders}},
+        {"$set" : {'pendingorders':pendingorders}},
         upsert = True)
     orders.update(
         {'orderid' : orderid},
-        {"$set" : {'takenby' : username}},
+        {"$set" : {'takenby':username}},
         upsert = True)
     return "Order taken"
-    
 
 
 
