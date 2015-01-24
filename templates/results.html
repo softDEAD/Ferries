@@ -8,6 +8,7 @@ Results
 {% endblock header %}
 
 {% block body %}
+{% if results != None %}
 <ul>
   {% for i in results["businesses"] %}
   <li>
@@ -24,5 +25,6 @@ Results
     {{i["location"]["display_address"][-1]}}
   </li>
   {% endfor %}
+{% endif %}
 </ul>
 {% endblock body %}
