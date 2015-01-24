@@ -60,7 +60,7 @@ def get_all_user_data(username): #string
     return ret
 
 def profile_comment(username, comment): #string, string
-    user = 
+    user = username
     comments = user['profilecomments']
     users.update(
         {'username' : username},
