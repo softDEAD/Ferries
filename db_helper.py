@@ -60,12 +60,14 @@ def get_all_user_data(username): #string
     return ret
 
 def profile_comment(username, comment): #string, string
-    user = users.findone({'username':username})
+    user = users.find_one({'username':username})
     comments = user['profilecomments']
     users.update(
         {'username' : username},
         {"$set" : {'profilecomments':comments.append(comment)}},
         upsert = True)
+
+    
 #-----ORDERS-----
 def order_creat(orderid, username, store, food, cost,
                 offer, preferredperiod,
@@ -81,7 +83,7 @@ def order_creat(orderid, username, store, food, cost,
             'instructions' : instructions,
             'takenby' : None #when taken by someone (if not None) it displays as 'Taken by %s'
             }
-    user = users.findone({'username':username})
+    user = users.find_one({'username':username})
     userorders = users['ordersplaced']
     userorders.append(orderid)
     users.update(
@@ -130,7 +132,7 @@ def get_orders(stores, periods): #list, list
 
 def order_fulfill(orderid): #int
     #username is the person who fulfilled order
-    order = orders.findone({'orderid':orderid})
+    order = orders.find_one({'orderid':orderid})
     user = order['takenby']
     if not user_exists(user):
         return "Error, user not found"
