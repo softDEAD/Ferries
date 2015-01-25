@@ -12,9 +12,34 @@
   <body>
     {% block navbar %}
     <div class="navbar navbar-inverse">
-      <ul class="nav navbar-nav">
-	<li><a href="/">Home- Search Page</a></li>
+      <ul class="nav navbar-nav"><li>
+	  <a class="navbar-center" href="/">
+		  <img alt="Brand" style="height:30px;width:50px" src="static/F.jpg">
+		</a>
+</li><li>
+	  <div class="col-lg-6">
+	    <div class="input-group" style="padding-top:10px">
+	      <div class="input-group-btn">
+		<div class="input-group-btn select" id="select1">
+		<select class="form-control" data-style="btn-info" style="height:40px;width:auto" data-style="btn-info" name="select" id="first">
+		<option value="Period"> Period </option>
+	 	<option value="Store"> Store </option>
+		<option value="User"> User </option>
+</select>
+</div>
+	      </div>
+	      <input type="text" class="form-control" style="height:auto;width:auto" name="search" placeholder="Search"> 
+	      <span class="input-group-btn">
+		<button class="btn btn-default" type="button" name="searchsubmit" value="searchsubmit">Search</button>
+	      </span>
+	    </div>
+	  </div>
+	</li>
       </ul>
+      <ul class="nav navbar-right"><li>
+	<li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="up">Sign up</button></li>
+	<li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="in">Sign in</button></li></ul>
+
     </div>
     {% endblock navbar %}
     {% with messages = get_flashed_messages() %}
