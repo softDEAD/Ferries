@@ -28,7 +28,6 @@ def login():
         does_account_exist = db.user_auth(username, password);
         if (does_account_exist == True):
             user = db.get_data (username);
-            session ['username'] = username
             return redirect("/profile")
         flash ("Invalid Username or Password")
         return redirect ("/")
@@ -43,7 +42,7 @@ def register():
     if (register == "Register"):
         username = request.args.get("username")
         password = request.args.get("password")
-        does_account_exist = user_auth(username, password);
+        does_account_exist = db.user_auth(username, password);
         if (does_account_exist == True):
             flash("Account already exists") #tried registering with taken username (None, None) is not a valid user/pass combo
             return redirect("/register")
