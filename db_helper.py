@@ -17,8 +17,8 @@ def user_creat(username, password): #string, string
     if (not user_exists(username)):
         new = { 'username' : username,
                 'password' : password,
-                'frees' : free,
-                'lunch' : lunch,
+                'frees' : [],
+                'lunch' : 0,
 		'rep' : 0,
                 'ordersplaced' : [],
 		'ordersfulfilled' : [],
