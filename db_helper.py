@@ -52,11 +52,11 @@ def get_user_data(username, data): #string, string
 
 def get_all_user_data(username): #string
     user = users.find_one({'username':username})
-    ret = []
+    ret = {}
     if (user != None):
         for var in user:
             if (var != "password"): #privacy is cool
-                ret.append(var)
+                ret[var] = user[var]
     return ret
 
 def profile_comment(username, comment): #string, string
@@ -99,10 +99,10 @@ def get_order_data(orderid, data): #int, string
 
 def get_all_order_data(orderid): #int
     order = orders.find_one({'orderid':orderid})
-    ret = []
+    ret = {}
     if (order != None):
         for var in order:
-            ret.append(order[var])
+            ret[var] = order[var]
     return ret
 
 def get_orders(stores, periods): #list, list
