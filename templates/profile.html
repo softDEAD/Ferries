@@ -1,0 +1,61 @@
+{% extends "loggedinbase.html" %}
+{% block title %}
+User Profile {{username}}
+{% endblock title %}
+{% block header %}
+Profile
+{% endblock header %}
+{% block body %}
+
+<div class="col-lg-3 col-lg-offset-2 jumbotron">
+{{username}}
+<br>
+
+Frees:
+{% for i in range(frees|length) %}
+<option value="{{ i }}">{{ frees[i] }}</option>
+{% endfor %}
+
+<button type="button" class="btn btn-default" id="frees">Edit Frees</button>
+
+Lunch:
+{{Lunch}}
+<button type="button" class="btn btn-default" id="lunch">Edit Frees</button>
+
+Rep: 
+{{Rep}}
+<button type="button" class="btn btn-default" style="background-color:lightgreen" id="repup">+1</button>
+<button type="button" class="btn btn-default" style="background-color:red" id="repdown">-1</button>
+
+</div>
+
+<div class="col-lg-4 col-lg-offset-1 jumbotron">
+Pending Orders:
+{% for i in range(porders|length) %}
+
+<option value="{{ i }}">{{ porders[i] }}</option>
+{{ porders[i] }
+{% endfor %}
+
+Placed Orders:
+{% for i in range(plorders|length) %}
+{{ plorders[i] }}
+{% endfor %}
+
+Fulfilled Orders:
+{% for i in range(forders|length) %}
+{{ forders[i] }}
+{% endfor %}
+
+Profile Comments:
+{% for i in range(comments|length) %}
+{{ comments[i] }}
+{% endfor %}
+</div>
+
+{% endblock body %}
+
+
+
+
+
