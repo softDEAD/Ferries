@@ -12,6 +12,10 @@ id = 0
 
 @app.route("/", methods = ["POST", "GET"])
 def index():
+    if(request.method=="POST"):
+        submit = request.form["submit"]
+        if (submit == "Search"):
+            return redirect("/results")
     return render_template ("index.html")
 
 @app.route("/login", methods = ["POST", "GET"])
@@ -127,11 +131,10 @@ def specorder(): ## one is null or not
 
 @app.route("/results", methods=["POST", "GET"])
 def results():
-    search = request.args.get("search")
-    if(search):
-        term = request.args.get("term")
-        loc = request.args.get("loc")
-        results = yelp.search("restaurant","New York");
+    if(request.method=="POST"):
+        term = request.form["term"];
+        loc = request.form["loc"];
+        results = yelp.search(term,loc);
         if(results==None):
             flash("No results came up")
         return render_template ("results.html",results=results)
