@@ -20,7 +20,7 @@ def login():
         session ['username'] = None
     if (session.get('username') != None):
         flash ("You are already logged in!")
-        return redirect("/")
+        return redirect("/profile/" + str (session.get('username')))
     session ['username'] = None
     submit = request.args.get("submit")
     if (submit == "Submit"):
@@ -28,8 +28,9 @@ def login():
         password = request.args.get("password")
         does_account_exist = db.user_auth(username, password);
         if (does_account_exist == True):
-            user = db.get_data (username)
-            return redirect("/profile")
+            user = db.get_all_user_data (username)
+            session ['username'] = username
+            return redirect("/profile/" + str (username))
         flash ("Invalid Username or Password")
         return redirect ("/")
     return render_template ("login.html")
@@ -56,11 +57,14 @@ def register():
             return redirect ("/")
     return render_template ("register.html") #have a button that redirects to /
 
-@app.route("/profile", methods = ["POST", "GET"])
-def profile():
+@app.route("/profile/<username>", methods = ["POST", "GET"])
+def profile(username):
     if ('username' in session):
-        username = session ['username']
-        return render_template ("profile.html", username = username, frees = db.get_data (username, frees), lunch = db.get_data (username, lunch), rep = db.get_data (username, rep), ordersp = db.get_data (username, ordersplaced), ordersf = db.get_data (username, ordersfulfilled), comments = db.get_data (username, comments))
+        data2 = db.get_all_user_data (username)
+        data = []
+        for x in data2:
+            data.append(db.get_user_data(username, x))
+        return render_template ("profile.html", data = data )
     else:
         return redirect ("/login")
 
@@ -69,23 +73,24 @@ def otherprofile(username): ##links from other user
     
     return render_template ("profile.html", username = username, frees = db.get_data (username, frees), lunch = db.get_data (username, lunch), rep = db.get_data (username, rep), ordersp = db.get_data (username, ordersplaced), ordersf = db.get_data (username, ordersfulfilled), comments = db.get_data (username, comments));
 
-@app.route("/placeorder", methods = ["POST", "GET"])
-def placeorder():
+@app.route("/placeorder/<orderid>", methods = ["POST", "GET"])
+def placeorder(orderid):
     submit = request.args.get("submit")
     if (submit == "Submit"):
         username = request.args.get("username")
-        orderid = orderid + 1
         store = request.args.get("store")
+        food = request.args.get("food")
         cost = request.args.get("cost")
         offer = request.args.get("offer")
         period1 = request.args.get("period1")
         period2 = request.args.get("period2")
         instruction = request.args.get("instruction")
         db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instruction)
+        orderid = orderid + 1
         return redirect ("/success")
     if ('username' in session):
         username = session ['username']
-        return render_template ("placeorder.html", username = username);
+        return render_template ("orders.html", orderid = orderid, username = username);
     else:
         return render_template ("/login")
            
@@ -103,7 +108,7 @@ def loadorder(id):
         db.add_comment(comment, id)
         comment = ""
         return redirect ("/loadorders/" + str(id))
-    return render_template ("loadorder.html", username=  )
+    return render_template ("loadorder.html", data = data  )
 
 @app.route("/orderspec", methods=["POST", "GET"])
 def specorder(): ## one is null or not

@@ -166,10 +166,11 @@ def add_comment(comment, orderid):
     order = orders.find_one({'orderid':orderid})
     comments = order['comments']
     comments.append(comment)
-        orders.update(
+    orders.update(
         {'orderid' : orderid},
         {"$set" : {'comments':comments}},
         upsert = True)
+    return "Comment added"
 
 
 

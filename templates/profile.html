@@ -1,29 +1,29 @@
 {% extends "loggedinbase.html" %}
 {% block title %}
-User Profile {{username}}
+User Profile {{data[0]}}
 {% endblock title %}
 {% block header %}
-Profile
+{{data [0]}}
 {% endblock header %}
 {% block body %}
 
 <div class="col-lg-3 col-lg-offset-2 jumbotron">
-{{username}}
+{{data[0]}}
 <br>
 
-Frees:
-{% for i in range(frees|length) %}
-<option value="{{ i }}">{{ frees[i] }}</option>
+Frees: <br>
+{% for i in range(data[1]|length) %}
+<option value="{{ i }}">{{ data[1][i] }}</option>
 {% endfor %}
-
+<br>
 <button type="button" class="btn btn-default" id="frees">Edit Frees</button>
-
-Lunch:
-{{Lunch}}
-<button type="button" class="btn btn-default" id="lunch">Edit Frees</button>
-
-Rep: 
-{{Rep}}
+<br>
+Lunch:<br>
+{{data [3]}}
+<button type="button" class="btn btn-default" id="lunch">Edit Lunch</button>
+<br>
+Rep: <br>
+{{data [4]}}<br>
 <button type="button" class="btn btn-default" style="background-color:lightgreen" id="repup">+1</button>
 <button type="button" class="btn btn-default" style="background-color:red" id="repdown">-1</button>
 
@@ -31,25 +31,26 @@ Rep:
 
 <div class="col-lg-4 col-lg-offset-1 jumbotron">
 Pending Orders:
-{% for i in range(porders|length) %}
+{% for i in range(data[7]|length) %}
+<br>
+{{ data[7][i] }}
 
-<option value="{{ i }}">{{ porders[i] }}</option>
-{{ porders[i] }
 {% endfor %}
+<br>
 
 Placed Orders:
-{% for i in range(plorders|length) %}
-{{ plorders[i] }}
+{% for i in range(data [5]|length) %}
+<br>{{ data[5][i] }}
 {% endfor %}
-
+<br>
 Fulfilled Orders:
-{% for i in range(forders|length) %}
-{{ forders[i] }}
+{% for i in range(data[6]|length) %}
+<br>{{ data[6][i] }}
 {% endfor %}
-
+<br>
 Profile Comments:
-{% for i in range(comments|length) %}
-{{ comments[i] }}
+{% for i in range(data[7]|length) %}
+<br>{{ data[7][i] }}
 {% endfor %}
 </div>
 
