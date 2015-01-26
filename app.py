@@ -129,6 +129,13 @@ def specorder(): ## one is null or not
             return redirect("/oprofile/" + str(search))
     return render_template ("specorder.html", orders == orders);
 
+@app.route("/logout")
+def logout():
+    session.pop('username', None)
+    flash('You are logged out')
+    return redirect("/")
+
+
 @app.route("/results", methods=["POST", "GET"])
 def results():
     if(request.method=="POST"):
