@@ -1,20 +1,20 @@
 {% extends "loggedinbase.html" %}
 {% block title %}
-Order- {{orderid}}
+Order- {{data [0]}}
 {% endblock title %}
 {% block header %}
 Order- {{orderid}}
 {% endblock header %}
 {% block body %}
 
-User: {{username}}<br>
-Store: {{store}}<br>
-Food: {{food}}<br>
-Cost: {{cost}}<br>
-Offer: {{offer}}<br>
-Preferred Period: {{preferredperiod}} <br>
-Alternate Period: {{otherperiod}} <br>
-Instructions: {{instructions}}<br>
+User: {{data [0]}}<br>
+Store: {{data [1]}}<br>
+Food: {{data [2]}}<br>
+Cost: {{data [3]}}<br>
+Offer: {{data [4]}}<br>
+Preferred Period: {{data [5]}} <br>
+Alternate Period: {{data [6]}} <br>
+Instructions: {{data [7]}}<br>
 
 
 {% if taken %}
