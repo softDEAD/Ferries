@@ -124,7 +124,6 @@ def loadorder(id2):
         db.add_comment(comment, id2)
         comment = ""
         return redirect ("/loadorders/" + str(id2))
-    username = session ['username']
     return render_template ("loadorder.html", data = data  )
 
 @app.route("/orderspec", methods=["POST", "GET"])
