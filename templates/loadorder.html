@@ -1,24 +1,24 @@
 {% extends "loggedinbase.html" %}
 {% block title %}
-Order- {{data [0]}}
+Order # {{data ['orderid']}}
 {% endblock title %}
 {% block header %}
-Order- {{orderid}}
+Order # {{data ['orderid']}}
 {% endblock header %}
 {% block body %}
 
-User: {{data [0]}}<br>
-Store: {{data [1]}}<br>
-Food: {{data [2]}}<br>
-Cost: {{data [3]}}<br>
-Offer: {{data [4]}}<br>
-Preferred Period: {{data [5]}} <br>
-Alternate Period: {{data [6]}} <br>
-Instructions: {{data [7]}}<br>
+User: {{data ['username']}}<br>
+Store: {{data ['store']}}<br>
+Food: {{data ['food']}}<br>
+Cost: {{data ['cost']}}<br>
+Offer: {{data ['offer']}}<br>
+Preferred Period: {{data ['prefferredperiod']}} <br>
+Alternate Period: {{data ['otherperiod']}} <br>
+Instructions: {{data ['instructions']}}<br>
 
 
 {% if taken %}
-Order Taken By: {{taken}}
+Order Taken By: {{data['taken']}}
 {% else %}
 <button type="button" class="btn btn-default" style="background-color:lightgreen" id="takeorder">Take Order</button>
 {% endif %}
@@ -29,9 +29,9 @@ Order Taken By: {{taken}}
 <input type="submit" class="btn btn-success" name="submitc" value="Submit">
 <br>
 
-{% for i in range(comments|length) %}
+{% for i in range(data ['comments']|length) %}
 <br>
-{{c[i]}}
+{{data['comments'][i]}}
 <br>
 {% endfor %}
 {% endblock body %}
