@@ -102,7 +102,7 @@ def get_all_order_data(orderid): #int
     ret = []
     if (order != None):
         for var in order:
-            ret.append(var)
+            ret.append(order[var])
     return ret
 
 def get_orders(stores, periods): #list, list

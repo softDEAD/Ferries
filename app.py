@@ -110,18 +110,15 @@ def success(orderid):
 
 
 @app.route("/loadorders/<id>", methods=["POST", "GET"])
-def loadorder(id):
-    data2 = db.get_all_order_data(id);
+def loadorder(id2):
+    data = db.get_all_order_data(id2);
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
     if (submitc == "Submit" and comment != ""):
-        db.add_comment(comment, id)
+        db.add_comment(comment, id2)
         comment = ""
-        return redirect ("/loadorders/" + str(id))
+        return redirect ("/loadorders/" + str(id2))
     username = session ['username']
-    data = []
-    for x in data2:
-        data.append(db.get_order_data(id, x))
     return render_template ("loadorder.html", data = data  )
 
 @app.route("/orderspec", methods=["POST", "GET"])
