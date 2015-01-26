@@ -9,12 +9,25 @@ Ferries
 
 {% block body %}
 <br>
-<form>
-  <input type="text" class="form-control" style="width:auto"  name="username" placeholder="Username">
-  <br>
-   <input type="password" class="form-control" style="width:auto" name="password" placeholder="Password">
-  <br>
-  <input type="submit" class="btn btn-success" name="submit" value="Submit">
-  <br>
-</form>
+<div class="row">
+<div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="/static/F.jpg" alt="..." class="img-thumbnail">
+      <div class="caption">
+        <h3>Order </h3>
+      </div>
+    </div>
+  </div>
+  {% for o in range(orderids|length) %}
+  <div class="col-sm-8 col-md-6">
+    <div class="thumbnail">
+      <img src="..." alt="..." class="img-thumbnail">
+      <div class="caption">
+        <h3>Order {{orderids[o]}}</h3>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
 {% endblock body %}
