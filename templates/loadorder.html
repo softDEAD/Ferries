@@ -1,0 +1,37 @@
+{% extends "loggedinbase.html" %}
+{% block title %}
+Order- {{orderid}}
+{% endblock title %}
+{% block header %}
+Order- {{orderid}}
+{% endblock header %}
+{% block body %}
+
+User: {{username}}<br>
+Store: {{store}}<br>
+Food: {{food}}<br>
+Cost: {{cost}}<br>
+Offer: {{offer}}<br>
+Preferred Period: {{preferredperiod}} <br>
+Alternate Period: {{otherperiod}} <br>
+Instructions: {{instructions}}<br>
+
+
+{% if taken %}
+Order Taken By: {{taken}}
+{% else %}
+<button type="button" class="btn btn-default" style="background-color:lightgreen" id="takeorder">Take Order</button>
+{% endif %}
+{% endblock body %}
+
+Comments: <br>
+ <textarea rows="5" type="text" class="form-control" name="comment" placeholder="Write a comment"></textarea>
+<br>
+<input type="submit" class="btn btn-success" name="submitc" value="Submit">
+<br>
+
+{% for i in range(comments|length) %}
+<br>
+{{c[i]}}
+<br>
+{% endfor %}
