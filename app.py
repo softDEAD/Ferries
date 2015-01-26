@@ -16,7 +16,7 @@ def index():
         submit = request.form["submit"]
         if (submit == "Search"):
             return redirect("/results")
-    if ('username' not in session):
+    if ('username' not in session or session.get('username') == None):
         loggedin = False
         return render_template ("index.html", loggedin = loggedin)
     else:
@@ -115,7 +115,7 @@ def success(orderid):
     return render_template ("success.html", data = data, orderid = orderid)
 
 
-@app.route("/loadorders/<id>", methods=["POST", "GET"])
+@app.route("/loadorders/<id2>", methods=["POST", "GET"])
 def loadorder(id2):
     data = db.get_all_order_data(id2);
     comment = request.args.get("comment")
