@@ -81,7 +81,8 @@ def order_creat(orderid, username, store, food, cost,
             'preferredperiod' : preferredperiod,
             'otherperiods' : otherperiods,
             'instructions' : instructions,
-            'takenby' : None #when taken by someone (if not None) it displays as 'Taken by %s'
+            'takenby' : None, #when taken by someone (if not None) it displays as 'Taken by %s'
+            'comments' : []
             }
     user = users.find_one({'username':username})
     userorders = users['ordersplaced']
@@ -160,6 +161,15 @@ def take_order(username, orderid): #string, string
         {"$set" : {'takenby':username}},
         upsert = True)
     return "Order taken"
+
+def add_comment(comment, orderid):
+    order = orders.find_one({'orderid':orderid})
+    comments = order['comments']
+    comments.append(comment)
+        orders.update(
+        {'orderid' : orderid},
+        {"$set" : {'comments':comments}},
+        upsert = True)
 
 
 
