@@ -60,12 +60,10 @@ def get_all_user_data(username): #string
     return ret
 
 def profile_comment(username, comment): #string, string
-    user = users.find_one({'username':username})
-    comments = user['profilecomments']
     users.update(
         {'username' : username},
-        {"$set" : {'profilecomments':comments.append(comment)}},
-        upsert = True)
+        {"$push" : {'profilecomments':comment}},
+    )
 
     
 #-----ORDERS-----
@@ -84,13 +82,10 @@ def order_creat(orderid, username, store, food, cost,
             'takenby' : None, #when taken by someone (if not None) it displays as 'Taken by %s'
             'comments' : []
             }
-    user = users.find_one({'username':username})
-    userorders = users['ordersplaced']
-    userorders.append(orderid)
     users.update(
         {'username' : username},
-        {"$set" : {'ordersplaced':userorders}},
-        upsert = True)
+        {"$push" : {'ordersplaced':orderid}},
+    )
     orders.insert(new)
     ################################spammable??
     return "Order #%s created"%(orderid)
@@ -137,12 +132,10 @@ def order_fulfill(orderid): #int
     user = order['takenby']
     if not user_exists(user):
         return "Error, user not found"
-    userfulfilled = user['ordersfulfilled']
-    userfulfilled.append(orderid)
     users.update(
         {'username' : username},
-        {"$set" : {'ordersfulfilled':userfulfilled}},
-        upsert = True)
+        {"$push" : {'ordersfulfilled':orderid}},
+    )
     orders.remove(order)
 
 def take_order(username, orderid): #string, string
@@ -150,12 +143,10 @@ def take_order(username, orderid): #string, string
     order = orders.find_one({'orderid':orderid})
     if order['takenby'] != None:
         return "Order already taken by %s"%(order['takenby'])
-    pendingorders = user['pendingorders']
-    pendingorders.append(orderid)
     users.update(
         {'username' : username},
-        {"$set" : {'pendingorders':pendingorders}},
-        upsert = True)
+        {"$push" : {'pendingorders':orderid}},
+    )
     orders.update(
         {'orderid' : orderid},
         {"$set" : {'takenby':username}},
@@ -163,13 +154,10 @@ def take_order(username, orderid): #string, string
     return "Order taken"
 
 def add_comment(comment, orderid):
-    order = orders.find_one({'orderid':orderid})
-    comments = order['comments']
-    comments.append(comment)
     orders.update(
         {'orderid' : orderid},
-        {"$set" : {'comments':comments}},
-        upsert = True)
+        {"$push" : {'comments':comment}},
+    )
     return "Comment added"
 
 
