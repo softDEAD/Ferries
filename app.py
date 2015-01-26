@@ -1,8 +1,14 @@
 from flask import Flask,request,url_for,redirect,render_template, flash, session
-import json, urllib2
+import json
 from functools import wraps
 import db_helper as db
 import yelp
+try:
+    import urllib.request as urllib2
+    import urllib.parse as urllib
+except ImportError:
+    import urllib2
+    import urllib
 
 app=Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
