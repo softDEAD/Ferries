@@ -1,0 +1,14 @@
+{% extends "loggedinbase.html" %}
+
+{% block title %}
+Success
+{% endblock title %}
+{% block header %}
+Success- Order# {{orderid}} Placed
+{% endblock header %}
+
+{% block body %}
+ <a href="/loadorders/{{orderid}}">Click Here to Look at Order</a> 
+
+{% endblock body %}
+

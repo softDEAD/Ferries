@@ -90,28 +90,38 @@ def placeorder(orderid):
         period2 = request.args.get("period2")
         instruction = request.args.get("instruction")
         db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instruction)
-        orderid = orderid + 1
-        return redirect ("/success")
+        tmp = orderid
+        orderid = int(orderid) + 1
+        return redirect ("/success/" + str(tmp))
     if ('username' in session):
         username = session ['username']
-        return render_template ("orders.html", orderid = orderid, username = username);
+        data = []
+        data.append (username)
+        return render_template ("orders.html", data = data, orderid = orderid, username = username);
     else:
         return render_template ("/login")
            
 @app.route("/success/<orderid>")
 def success(orderid):
-    return render_template ("success.html", orderid == orderid)
+    username = session ['username']
+    data = []
+    data.append (username)
+    return render_template ("success.html", data = data, orderid = orderid)
 
 
 @app.route("/loadorders/<id>", methods=["POST", "GET"])
 def loadorder(id):
-    data = db.get_all_order_data(id);
+    data2 = db.get_all_order_data(id);
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
     if (submitc == "Submit" and comment != ""):
         db.add_comment(comment, id)
         comment = ""
         return redirect ("/loadorders/" + str(id))
+    username = session ['username']
+    data = []
+    for x in data2:
+        data.append(db.get_order_data(id, x))
     return render_template ("loadorder.html", data = data  )
 
 @app.route("/orderspec", methods=["POST", "GET"])
