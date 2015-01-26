@@ -16,7 +16,13 @@ def index():
         submit = request.form["submit"]
         if (submit == "Search"):
             return redirect("/results")
-    return render_template ("index.html")
+    if ('username' not in session):
+        loggedin = False
+        return render_template ("index.html", loggedin = loggedin)
+    else:
+        loggedin = True
+        username = session.get('username')
+        return render_template ("index.html", loggedin = loggedin, username = username)
 
 @app.route("/login", methods = ["POST", "GET"])
 def login():
