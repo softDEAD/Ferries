@@ -1,0 +1,41 @@
+{% extends "loggedinbase.html" %}
+{% block title %}
+User Profile {{username}}
+{% endblock title %}
+{% block header %}
+Profile
+{% endblock header %}
+{% block body %}
+
+{{username}}
+<br>
+
+Frees:
+{% for i in range(frees|length) %}
+<option value="{{ i }}">{{ frees[i] }}</option>
+{% endfor %}
+
+Edit Frees
+
+
+Lunch:
+{{Lunch}}
+
+Rep: 
+{{Rep}}
+
+Pending Orders:
+{{pending}}
+
+Placed Orders:
+{{Ordersplaced}}
+
+Fulfilled Orders:
+{{Ordersfulfilled}}
+
+Profile Comments:
+{{Profilecomments}}
+
+
+
+
