@@ -3,12 +3,16 @@
 Orders
 {% endblock title %}
 {% block header %}
-Orders ID {{orderid}}
+<div class="container">
+  <div class="jumbotron">
+<b>Orders ID# {{orderid}} </b> </div> </div>
 {% endblock header %}
 {% block body %}
 
-Username: {{data ['username']}}
+<div class="col-lg-7 col-lg-offset-3 jumbotron">
+<h3> <b>Username: {{data ['username']}} </b></h3>
 
+<h4>
 <form class="form_control" style="width:600px">
   <br>
 Order ID #: {{orderid}} <br>
@@ -29,6 +33,6 @@ Instructions for Deliverer: <br>
  <textarea rows="5" type="text" class="form-control" name="instructions" placeholder="Instructions!"></textarea>
 <br>
   <input type="submit" class="btn btn-success" name="submit" value="Submit">
-</form>
-
+</form> </h4>
+</div> 
 {% endblock body %}

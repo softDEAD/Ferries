@@ -5,6 +5,7 @@ $(document).ready(function() {
     n = document.getElementById('out').onclick = function(){window.location = "/logout";}
     o = document.getElementById('userb').onclick = function(){window.location = "/profile/" + document.getElementById("userb").innerHTML;}
     p = document.getElementById('placeorder').onclick = function(){window.location = "/placeorder/" + document.getElementById("orderid").innerHTML;}
+    w = document.getElementById('yelp').onclick = function(){window.location = "/results";}
 });
 
 $('.col-sm-8 col-md-6').click(function() {
