@@ -122,6 +122,7 @@ def get_order_data(orderid, data): #int, string
 
 def get_all_order_data(orderid): #int
     order = orders.find_one({'orderid':orderid})
+    print order
     return order
 
 def get_orders(store = '', period = 0): #string, int
