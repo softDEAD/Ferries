@@ -25,13 +25,22 @@ def search(func):
             loggedin = False
         if(searchsubmit == "Search" and search != ""):
             if (select == "Period"):
-                orders2 = db.get_orders ('', int(search))
-                print (orders2)
+                try:
+                    period = int(search)
+                    if (period < 1 or period > 10):
+                        flash ("Invalid Period")
+                    else:
+                        orders2 = db.get_orders ('', int(period))
+                        print(orders2)
+                except:
+                    flash ("Invalid Period")
             elif (select == "Store"):
                 orders2 = db.get_orders (str(search), 0)
             else:
-                return redirect("/profile/" + str(search))
-        
+                if db.user_exists(str(search)):
+                    return redirect("/profile/" + str(search))
+                else:
+                    flash ("User does not exist.")
             return redirect("/")
         else:
             return func(*args,**kwargs)
@@ -160,16 +169,17 @@ def placeorder(orderid2):
         username = session ['username']
         store = request.args.get("store")
         food = request.args.get("food")
-        cost = request.args.get("cost")
-        offer = request.args.get("offer")
-        period1 = request.args.get("period1")
-        period2 = request.args.get("period2")
-        instruction = request.args.get("instruction")
-        if (username == "" or store == "" or food == "" or cost == 0 or offer == 0 or period1 == 0 or period2 == 0 or instruction == ""):
+        cost = int(request.args.get("cost"))
+        offer = int(request.args.get("offer"))
+        period1 = int(request.args.get("period1"))
+        period2 = int(request.args.get("period2"))
+        instructions = request.args.get("instructions")
+        if (username == "" or store == "" or food == "" or cost == 0 or offer == 0 or period1 == 0 or period2 == 0 or (period1 < 1 or period1 > 10) or (period2 < 1 or period2 > 10) or instructions == ""):
+
             flash("Order incomplete")
             return redirect ("/placeorder/" + str(db.get_id()))
         else:
-            db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instruction)
+            db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instructions)
             username = ""
             store = ""
             food = ""
@@ -177,8 +187,8 @@ def placeorder(orderid2):
             offer = 0
             period1 = 0 
             period2 = 0
-            instruction = "" 
-            return redirect ("/success/" + str(db.get_id() ))
+            instructions = "" 
+            return redirect ("/success/" + str(db.get_id()))
     if ('username' in session):
         username2 = session ['username']
         data = {'username':username2}
@@ -199,11 +209,14 @@ def success(orderid):
 @search
 def loadorder(id2):
     id2 = int(id2)
-    data = db.get_all_order_data(id2);
+    data = db.get_all_order_data(id2)
+    print data
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
+    fulfillable = False
+    fulfilled = False
     if (submitc == "Submit" and comment != ""):
-        db.add_comment(comment, id2)
+        db.add_comment(comment, id2, session['username'])
         comment = ""
         return redirect ("/loadorders/" + str(id2))
     if ('username' in session ):

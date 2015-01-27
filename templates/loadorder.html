@@ -1,25 +1,25 @@
 {% extends "loggedinbase.html" %}
 {% block title %}
-Order # {{data ['orderid']}}
+Order ID # {{data ['orderid']}}
 {% endblock title %}
 {% block header %}
 Order # {{data ['orderid']}}
 {% endblock header %}
 {% block body %}
 
-User: {{data ['username']}}<br>
-Store: {{data ['store']}}<br>
-Food: {{data ['food']}}<br>
-Cost: {{data ['cost']}}<br>
-Offer: {{data ['offer']}}<br>
-Preferred Period: {{data ['preferredperiod']}} <br>
-Alternate Period: {{data ['otherperiods']}} <br>
-Instructions: {{data ['instructions']}}<br>
+<h4><b> User</b>: {{data ['username']}}<br>
+<b>Store</b>: {{data ['store']}}<br>
+<b>Food</b>: {{data ['food']}}<br>
+<b>Cost</b>: {{data ['cost']}}<br>
+<b>Offer</b>: {{data ['offer']}}<br>
+<b>Preferred Period</b>: {{data ['preferredperiod']}} <br>
+<b>Alternate Period</b>: {{data ['otherperiods']}} <br>
+<b>Instructions</b>: {{data ['instructions']}}<br> </h4>
 
 <form>
 
 {% if takenby %}
-Order Taken By: {{data['takenby']}}
+<b>Order Taken By</b>: {{data['takenby']}}
 {% else %}
 
 <input="submit" class="btn btn-default" style="background-color:lightgreen" name="Take Order" value="taken" id="takeorder">
@@ -30,12 +30,12 @@ Order Taken By: {{data['takenby']}}
 {% endif %}
 
 {% if fulfilled %}
-Order has been Fulfilled
+<b> Order has been Fulfilled </b>
 {% endif %}
 
 
 
-<br> Comments: <br>
+<br> <b>Comments</b>: <br>
  <textarea rows="5" type="text" class="form-control" name="comment" placeholder="Write a comment"></textarea>
 <br>
 <input type="submit" class="btn btn-success" name="submitc" value="Submit">
@@ -44,7 +44,7 @@ Order has been Fulfilled
 </form>
 {% for i in range(data ['comments']|length) %}
 <br>
-{{data['comments'][i]}}
+{{data['comments'][i][0]}} says: {{data['comments'][i][1]}}
 <br>
 {% endfor %}
 {% endblock body %}

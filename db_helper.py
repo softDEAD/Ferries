@@ -48,8 +48,8 @@ def user_creat(username, password): #string, string
                 'pendingorders' : []
                 }
         users.insert(new)
-        return "Registration successful"
-    return "Registration failed; Username taken"
+        print "Registration successful"
+    print "Registration failed; Username taken"
 
 def change_frees(username, frees): #string, list
     users.update(
@@ -68,7 +68,7 @@ def get_user_data(username, data): #string, string
     if (user != None):
         if data in user:
             return user[data]
-    return "No %s data for user %s."%(data,username)
+    print "No %s data for user %s."%(data,username)
 
 def get_all_user_data(username): #string
     user = users.find_one({'username':username})
@@ -122,7 +122,7 @@ def get_order_data(orderid, data): #int, string
     if (order != None):
         if data in order:
             return order[data]
-    return "No %s data for order %d."%(data,orderid)
+    print "No %s data for order %d."%(data,orderid)
 
 def get_all_order_data(orderid): #int
     return orders.find_one({'orderid':orderid})
@@ -149,7 +149,8 @@ def order_fulfill(orderid): #int
     order = orders.find_one({'orderid':orderid})
     user = order['takenby']
     if not user_exists(user):
-        return "Error, user not found"
+        print "Error, user not found"
+        return -1
     users.update(
         {'username' : username},
         {"$push" : {'ordersfulfilled':orderid}},
@@ -159,7 +160,8 @@ def order_fulfill(orderid): #int
 def take_order(username, orderid): #string, string
     order = orders.find_one({'orderid':orderid})
     if order['takenby'] != '':
-        return "Order already taken by %s"%(order['takenby'])
+        print "Order already taken by %s"%(order['takenby'])
+        return -1
     users.update(
         {'username' : username},
         {"$push" : {'pendingorders':orderid}},
@@ -168,15 +170,15 @@ def take_order(username, orderid): #string, string
         {'orderid' : orderid},
         {"$set" : {'takenby':username}},
         upsert = True)
-    return "Order taken"
+    print "Order taken"
 
 
-def add_comment(comment, orderid):
+def add_comment(comment, orderid, username):
     orders.update(
         {'orderid' : orderid},
-        {"$push" : {'comments':comment}},
+        {"$push" : {'comments':[username, comment]}},
     )
-    return "Comment added"
+    print "Comment added"
 
 
 
