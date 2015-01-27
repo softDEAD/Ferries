@@ -210,6 +210,7 @@ def success(orderid):
 def loadorder(id2):
     id2 = int(id2)
     data = db.get_all_order_data(id2)
+    print data
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
     fulfillable = False
