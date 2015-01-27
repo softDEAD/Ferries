@@ -136,15 +136,23 @@ def profile(username):
         if (submit == "submit"):
             frees = request.args.get("fname")
             l = frees.split(",")
+            if (len(l) == 1 and ' ' in l[0]):
+                flash("Invalid frees, please separate frees by commas")
+                return redirect("/profile/" + str(username))
             l2 = []
             for item in l:
                 l2.append(item.strip())
             err = False
-            for item in l2:
-                if (type(item) is not int):
-                    err = True
+            try:
+                for item in l2:
+                    i = int(item)
+                    if (i < 1 or i > 10):
+                        err = True
+            except:
+                flash("Invalid frees, must be numbers")
+                return redirect("/profile/" + str(username))
             if err:
-                flash("Invalid frees")
+                flash("Invalid frees, must be between 1 and 10")
                 return redirect("/profile/" + str(username))
             db.change_frees(username, frees)
             return redirect("/profile/" + str(username))
