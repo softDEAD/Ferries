@@ -210,6 +210,7 @@ def logout():
 @search
 def results():
     results={};
+<<<<<<< HEAD
     try:
         #geo = request.form['geo'];
         #term= request.form['term'];
@@ -234,8 +235,30 @@ def results():
         except:
             flash("Please enter a location or check automatic");
     flash("fail");
+=======
+    error="";
+    term="";
+    loc="";
+    if request.method=='POST':
+        geo = 1 == len(request.form.getlist('geo'));
+        term= request.form['term'];
+        if(term==""):
+            flash("Please enter a term.");
+            return render_template("results.html",results=results);
+        if(geo):
+            lat = request.form["lat"];
+            lon = request.form["lon"];
+            results=yelp.searchbound(term,lat,lon);
+        else:
+            loc = request.form["loc"];
+            if(loc==""):
+                flash("Please enter a location or check automatic");
+                return render_template("results.html",results=results);
+            results = yelp.search(term,loc);
+    if(results==None):
+        flash("No results came up");
+>>>>>>> dionis
     return render_template("results.html",results=results);
-
 
 if __name__ == '__main__':
     app.debug = True

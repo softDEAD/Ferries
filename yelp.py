@@ -47,3 +47,13 @@ def search(term, location):
     }
     return request(url_params)
 
+def searchbound(term, lat,lon):
+    SW="{0:.6f}".format(float(lat)-.1)+","+"{0:.6f}".format(float(lon)-.1);
+    NE="{0:.6f}".format(float(lat)+.1)+","+"{0:.6f}".format(float(lon)+.1);
+    url_params = {
+        'term': term.replace(' ', '+'),
+        'bounds': "-74.101123,40.515222|-73.901123,40.715222",
+        'limit': SEARCH_LIMIT
+    }
+    return request(url_params)
+
