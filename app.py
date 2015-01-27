@@ -25,13 +25,21 @@ def search(func):
             loggedin = False
         if(searchsubmit == "Search" and search != ""):
             if (select == "Period"):
-                orders2 = db.get_orders ('', int(search))
-                print (orders2)
+                try:
+                    period = int(search)
+                    if (period < 1 or period > 10):
+                        flash ("Invalid Period")
+                    else:
+                        orders2 = db.get_orders ('', period)
+                except:
+                    flash ("Invalid Period")
             elif (select == "Store"):
                 orders2 = db.get_orders (str(search), 0)
             else:
-                return redirect("/profile/" + str(search))
-        
+                if db.user_exists(str(search)):
+                    return redirect("/profile/" + str(search))
+                else:
+                    flash ("User does not exist.")
             return redirect("/")
         else:
             return func(*args,**kwargs)
@@ -165,7 +173,7 @@ def placeorder(orderid2):
         period1 = request.args.get("period1")
         period2 = request.args.get("period2")
         instruction = request.args.get("instruction")
-        if (username == "" or store == "" or food == "" or cost == 0 or offer == 0 or period1 == 0 or period2 == 0 or instruction == ""):
+        if (username == "" or store == "" or food == "" or cost == 0 or offer == 0 or period1 == 0 or period2 == 0 or (period1 < 1 or period1 > 10) or (period2 < 1 or period2 > 10) or instruction == ""):
             flash("Order incomplete")
             return redirect ("/placeorder/" + str(db.get_id()))
         else:
