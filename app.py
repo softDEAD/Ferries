@@ -9,14 +9,19 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 orderid = db.get_id()
 id = 0
-loggedin = False
+orders2 = []
 
 def search(func):
     @wraps(func)
     def inner(*args,**kwargs):
+        global orders2
         select = request.args.get("select")
         search = request.args.get("search")
         searchsubmit = request.args.get("searchsubmit")
+        if ('username' in session and session.get('username') != None):
+            loggedin = True
+        else:
+            loggedin = False
         if(searchsubmit == "Search" and search != ""):
             if (select == "Period"):
                 orders2 = db.get_orders ([], [int(search)])
@@ -24,7 +29,8 @@ def search(func):
                 orders2 = db.get_orders ([str(search)], [])
             else:
                 return redirect("/profile/" + str(search))
-            return render_template ("index.html", orderid = orderid, orders = orders2);
+        
+            return redirect(url_for('index'), orders2 = orders2)
         else:
             return func(*args,**kwargs)
     return inner
@@ -33,6 +39,7 @@ def search(func):
 @search
 def index():
     global orderid
+    global orders2
     if(request.method=="POST"):
         submit = request.form["submit"]
         if (submit == "Search"):
@@ -43,7 +50,7 @@ def index():
     else:
         loggedin = True
         username2 = session.get('username')
-        return render_template ("index.html", orderid = orderid, loggedin = loggedin, username2 = username2)
+        return render_template ("index.html", orders2 = orders2 orderid = orderid, loggedin = loggedin, username2 = username2)
 
 
 
