@@ -181,7 +181,12 @@ def placeorder(orderid2):
             flash("Order incomplete. Field Not filled, Period less than 0 or greater than 10 and/or Offer or Cost = 0")
             return redirect ("/placeorder/" + str(db.get_id()))
         else:
-            db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instructions)
+            try:
+                db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instructions)
+            except: 
+                flash("Invalid Format. Do not Use special characters")
+                return redirect ("/placeorder/" + str(db.get_id()))
+            
             db.up_id()
 
             username = ""
