@@ -9,6 +9,7 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 orderid = db.get_id()
 id = 0
+loggedin = False
 
 def search(func):
     @wraps(func)
@@ -16,7 +17,7 @@ def search(func):
         select = request.args.get("select")
         search = request.args.get("search")
         searchsubmit = request.args.get("searchsubmit")
-        if(searchsubmit == "Search" and search != ""): 
+        if(searchsubmit == "Search" and search != ""):
             if (select == "Period"):
                 orders2 = db.get_orders ([], [int(search)])
             elif (select == "Store"):
@@ -42,8 +43,9 @@ def index():
     else:
         loggedin = True
         username2 = session.get('username')
-        
         return render_template ("index.html", orderid = orderid, loggedin = loggedin, username2 = username2)
+
+
 
 @app.route("/login", methods = ["POST", "GET"])
 @search
@@ -98,12 +100,16 @@ def profile(username):
         data = db.get_all_user_data (username)
         return render_template ("profile.html", username2 = username2, data = data, orderid = orderid)
     else:
-        return redirect ("/login")
+        flash ("You are not logged in")
+        return redirect ("/")
 
 
 @app.route("/placeorder/<orderid2>", methods = ["POST", "GET"])
 @search
 def placeorder(orderid2):
+    if ('username' not in session or session ['username'] == None):
+        flash ("You are not logged in")
+        return redirect ("/")
     global orderid
     submit = request.args.get("submit")
     if (submit == "Submit"):
@@ -188,6 +194,7 @@ def loadorder(id2):
 @search
 def logout():
     session.pop('username', None)
+    loggedin = False
     flash('You are logged out')
     return redirect("/")
 
