@@ -9,7 +9,7 @@ import oauth2
 url = 'http://api.yelp.com/v2/search/?'
 DEFAULT_TERM = 'lunch'
 DEFAULT_LOCATION = 'New York City, NY'
-SEARCH_LIMIT = 3
+SEARCH_LIMIT = 10
 
 
 CONSUMER_KEY = "UggI6CZTqoXNSvFUzZiC0Q"

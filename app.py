@@ -172,30 +172,28 @@ def logout():
 @search
 def results():
     results={};
-    try:
-        #geo = request.form['geo'];
-        #term= request.form['term'];
-        geo=False;
-        term = "sushi";
-    except:
-        flash("Please enter a term");
-        return render_template("results.html",results=results);
-    if(geo):
-        lat = request.form["lat"];
-        lon = request.form["lon"];
-    else:
+    if request.method=='POST':
         try:
-            for i in request.form:
-                flash(i);
-            loc = request.form["loc"];
-            loc="brooklyn";
-            results = yelp.search(term,loc);
-            if(results==None):
-                flash("No results came up");
-            return jsonify(results);
+            #geo = request.form['geo'];
+            term= request.form['term'];
+            geo=False;
+            #term = "sushi";
         except:
-            flash("Please enter a location or check automatic");
-    flash("fail");
+            flash("Please enter a term");
+            return render_template("results.html",results=results);
+        if(geo):
+            lat = request.form["lat"];
+            lon = request.form["lon"];
+        else:
+            try:
+                loc = request.form["loc"];
+                #loc="brooklyn";
+                results = yelp.search(term,loc);
+                if(results==None):
+                    flash("No results came up");
+            except:
+                flash("Please enter a location or check automatic");
+                flash("fail");
     return render_template("results.html",results=results);
 
 
