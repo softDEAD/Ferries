@@ -16,14 +16,14 @@ def search(func):
         select = request.args.get("select")
         search = request.args.get("search")
         searchsubmit = request.args.get("searchsubmit")
-        if(searchsubmit == "searchsubmit"): 
+        if(searchsubmit == "Search"): 
             if (select == "Period"):
-                orders = db.get_orders (0, search)
+                orders = db.get_orders ([], [int(search)])
             elif (select == "Store"):
-                orders = db.get_orders (search, 0)
+                orders = db.get_orders ([str(search)], [])
             else:
                 return redirect("/profile/" + str(search))
-            return render_template ("index.html", orders == orders);
+            return render_template ("index.html", orderid = orderid, orders = orders);
         else:
             return func(*args,**kwargs)
     return inner
@@ -42,7 +42,7 @@ def index():
     else:
         loggedin = True
         username2 = session.get('username')
-        return render_template ("index.html", loggedin = loggedin, username2 = username2)
+        return render_template ("index.html", orderid = orderid, loggedin = loggedin, username2 = username2)
 
 @app.route("/login", methods = ["POST", "GET"])
 @search
@@ -103,7 +103,6 @@ def profile(username):
 @app.route("/placeorder/<orderid2>", methods = ["POST", "GET"])
 @search
 def placeorder(orderid2):
-    global orderid
     submit = request.args.get("submit")
     if (submit == "Submit"):
         orderid2 = orderid

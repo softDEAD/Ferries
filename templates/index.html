@@ -1,7 +1,6 @@
 <html>
 <head>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1-rc2/jquery.js"></script>
-  <script src="static/script.js"></script>
   <title>
     Ferries
   </title>
@@ -28,18 +27,22 @@
 	    </div>
 	    <input type="text" class="form-control" style="height:auto;width:auto" name="search" placeholder="Search">
 	    <span class="input-group-btn">
-	      <button class="btn btn-default" type="button" name="searchsubmit" value="searchsubmit">Search</button>
+	      <input type="submit" class="btn btn-primary" name="searchsubmit" value="Search">Search</button>
 	    </span>
 	  </div>
 	</div>
       </li>
     </ul>
     {% if loggedin %}
+  <script src="static/script2.js"></script>
     <ul class="nav navbar-right"><li>
       <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="out">Log Out</button></li>
-      <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="userb"> {{username2}}</button></li> 
+      <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="userb">{{username2}}</button></li> 
  <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="placeorder"> Place Order</button></li> </ul>
+<div id="orderid" style="visibility:hidden">{{orderid}}</div>
     {% else %}
+  <script src="static/script.js"></script>
+
     <ul class="nav navbar-right"><li>
       <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="up">Sign up</button></li>
       <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="in">Sign in</button></li></ul>
