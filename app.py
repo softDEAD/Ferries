@@ -198,14 +198,14 @@ def success(orderid):
 @search
 def loadorder(id2):
     data = db.get_all_order_data(id2);
-    print (data)
+    print data
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
     if (submitc == "Submit" and comment != ""):
         db.add_comment(comment, id2)
         comment = ""
         return redirect ("/loadorders/" + str(id2))
-    if ('username' in session and session['username'] != data ['username']):
+    if ('username' in session and (session['username'] != data ['username'])):
         username2 = session ['username']
         takenby = data ['takenby']
     else:
