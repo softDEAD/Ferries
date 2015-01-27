@@ -216,7 +216,7 @@ def loadorder(id2):
         if (taken == "taken"):
             db.take_order(username2, id2)
             return redirect ("/loadorders/" + str(id2))
-    elif (takenby == db.get_order_data(id2, 'takenby') and session['username'] == data ['username'] and fulfilled == False):
+    elif (takenby == db.get_order_data(id2, 'takenby') and session['username'] == data ['username']):
         fulfillable = True
         fulfilled = False
         ofilled = request.args.get ("Order Has Fulfilled")

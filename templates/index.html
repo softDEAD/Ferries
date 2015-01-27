@@ -39,8 +39,8 @@
     <ul class="nav navbar-right"><li>
       <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="out">Log Out</button></li>
       <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="userb">{{username2}}</button></li> 
- <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="placeorder"> Place Order</button></li>
- <li class="navbar-right"><button type="button" class="btn btn-primary navbar-btn" id="yelp"> Search Up Stores</button> </li>  </ul>
+ <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="placeorder"> Place Order</button></li> 
+ <li class="navbar-right"><a href="/results"> <button type="button" class="btn btn-primary navbar-btn" id="yelp"> Search Up Stores</button> </a> </li>  </ul>
 <div id="orderid" style="visibility:hidden">{{orderid}}</div>
     {% else %}
   <script src="static/script.js"></script>
@@ -48,7 +48,8 @@
     <ul class="nav navbar-right"><li>
       <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="up">Sign up</button></li>
       <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="in">Sign in</button></li>
-  <li class="navbar-right"><button type="button" class="btn btn-primary navbar-btn" id="yelp"> Search up Stores</button> </li> </ul>
+
+  <li class="navbar-right"><a href="/results"><button type="button" class="btn btn-primary navbar-btn" id="yelp"> Search up Stores</button> </a></li> </ul>
     {% endif %}
 
     
