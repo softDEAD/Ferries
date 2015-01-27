@@ -17,8 +17,8 @@ Alternate Period: {{data ['otherperiods']}} <br>
 Instructions: {{data ['instructions']}}<br>
 
 
-{% if taken %}
-Order Taken By: {{data['taken']}}
+{% if takenby %}
+Order Taken By: {{data['takenby']}}
 {% else %}
 <button type="button" class="btn btn-default" style="background-color:lightgreen" id="takeorder">Take Order</button>
 {% endif %}

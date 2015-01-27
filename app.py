@@ -115,14 +115,17 @@ def success(orderid):
     return render_template ("success.html", data = data, orderid = orderid)
 
 
-@app.route("/loadorders/<id2>", methods=["POST", "GET"])
+@app.route("/loadorders/<id2>")
 def loadorder(id2):
     data = db.get_all_order_data(id2);
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
     if (submitc == "Submit" and comment != ""):
+        print "GOT TO HERE"
+
         db.add_comment(comment, id2)
         comment = ""
+        print "GOT TO HERE"
         return redirect ("/loadorders/" + str(id2))
     print (data)
     return render_template ("loadorder.html", data = data  )
