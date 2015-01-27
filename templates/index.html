@@ -70,12 +70,39 @@
 	  <h1><i><b> Ferries </b></i></h1>
       </header>
 
+
+
 <body>
+<script language="Javascript">
+  function showEffect() {
+  var renderer = PIXI.autoDetectRenderer(500, 500, null, true);
+  var stage = new PIXI.Stage(0xFFFFFF);
+  stage.interactive = true;
+  
+  document.getElementById("box").appendChild(renderer.view);
+
+  var rect = new PIXI.Graphics();
+  rect.lineStyle(1, 0x000);
+
+  rect.interactive = true;
+  rect.hitArea = new PIXI.Rectangle(0,0, 200, 200);
+  rect.drawRect(0,0, 200,200);
+  rect.click = function(ev) { console.log("clicked"); }
+  rect.mouseover = function(ev) { console.log("over"); }
+  stage.addChild(rect);
+
+  update();
+  function update(){
+  requestAnimFrame(update);
+  renderer.render(stage);
+   }
+</script>
+
 <br>
 <div class="row">
   <a href="/loadorders/0"> 
 <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
+    <div class="thumbnail" id="box" onchange="showEffect()">
       <img src="/static/F.jpg" alt="..." class="img-thumbnail">
       <div class="caption">
         <h3>Order Sample </h3>
@@ -84,7 +111,7 @@
   </div>
   {% for o in range(orders|length) %}
   <a href="/loadorders/{{o}}"> <div class="col-sm-6 col-md-4">
-      <div class="thumbnail">
+      <div class="thumbnail" id="box" onchange="showEffect()">
 	<img src="/static/F.jpg" alt="..." class="img-thumbnail">
 	<div class="caption">
           <h3>Order ID# {{o}}</h3>

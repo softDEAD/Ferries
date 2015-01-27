@@ -30,7 +30,8 @@ def search(func):
                     if (period < 1 or period > 10):
                         flash ("Invalid Period")
                     else:
-                        orders2 = db.get_orders ('', period)
+                        orders2 = db.get_orders ('', int(period))
+                        print(orders2)
                 except:
                     flash ("Invalid Period")
             elif (select == "Store"):
@@ -172,7 +173,8 @@ def placeorder(orderid2):
         offer = request.args.get("offer")
         period1 = request.args.get("period1")
         period2 = request.args.get("period2")
-        instruction = request.args.get("instruction")
+        instruction = request.args.get("instructions")
+        print (instruction)
         if (username == "" or store == "" or food == "" or cost == 0 or offer == 0 or period1 == 0 or period2 == 0 or (period1 < 1 or period1 > 10) or (period2 < 1 or period2 > 10) or instruction == ""):
             flash("Order incomplete")
             return redirect ("/placeorder/" + str(db.get_id()))
