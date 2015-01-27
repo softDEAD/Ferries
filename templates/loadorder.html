@@ -19,22 +19,28 @@ Order # {{data ['orderid']}}
 <form>
 
 {% if takenby %}
+<div>
+<type="submit" class="btn btn-default" style="background-color:blue" name="T" value="t" id="takeorder">
 <b>Order Taken By</b>: {{data['takenby']}}
+</div>
 {% else %}
-
-<input="submit" class="btn btn-default" style="background-color:lightgreen" name="Take Order" value="taken" id="takeorder">
-{% endif %}
+<div>
+<input type="submit" class="btn btn-default" style="background-color:blue" name="Take Order" value="Take Order" id="takeorder">
+</div>
+{% endif %}<br>
 
 {% if fulfillable %}
-<input="submit" class="btn btn-default" style="background-color:lightgreen" name="Order Has Fulfilled" value="fill">
-{% endif %}
+<div>
+<input type="submit" class="btn btn-default" style="background-color:lightgreen" name="Order Has Fulfilled" value="Order Has Been Fulfilled"> </div>
+{% endif %}<br>
 
-{% if fulfilled %}
-<b> Order has been Fulfilled </b>
-{% endif %}
+{% if fulfilled %}<div>
+<type="submit" class="btn btn-default" style="background-color:lightgreen" name="O" value="f">
+<b> Order has been Fulfilled </b> </div>
+{% endif %}<br>
 
 
-
+<type="submit" class="btn btn-default" style="background-color:red" name="T2" value="t2" id="takeorder">
 <br> <b>Comments</b>: <br>
  <textarea rows="5" type="text" class="form-control" name="comment" placeholder="Write a comment"></textarea>
 <br>

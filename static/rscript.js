@@ -56,7 +56,7 @@ var stopit = function(e) {
     window.clearTimeout(myevent);
 }
 $(document).ready(function() {
-     document.getElementById('geo').addEventListener("click",startit);
+    // document.getElementById('geo').addEventListener("click",startit);
 });
 
 

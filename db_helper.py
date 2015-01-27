@@ -159,6 +159,7 @@ def get_orders(store = '', period = 0): #string, int
             ret2.append(orderid)
     return ret2
 
+
 def order_fulfill(orderid): #int
     #username is the person who fulfilled order
     order = orders.find_one({'orderid':orderid})
@@ -167,10 +168,11 @@ def order_fulfill(orderid): #int
         print "Error, user not found"
         return -1
     users.update(
-        {'username' : username},
-        {"$push" : {'ordersfulfilled':orderid}},
+        {'username' : user},
+        {"$push" : {'ordersfulfilled':int(orderid)}},
     )
     orders.remove(order)
+    return "Order Fulfilled"
 
 def take_order(username, orderid): #string, string
     order = orders.find_one({'orderid':orderid})
@@ -178,11 +180,11 @@ def take_order(username, orderid): #string, string
         print "Order already taken by %s"%(order['takenby'])
         return -1
     users.update(
-        {'username' : username},
-        {"$push" : {'pendingorders':orderid}},
+        {'username':username},
+        {"$push" : {'pendingorders':int(orderid)}},
     )
     orders.update(
-        {'orderid' : orderid},
+        {'orderid' : int(orderid)},
         {"$set" : {'takenby':username}},
         upsert = True)
     print "Order taken"
