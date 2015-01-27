@@ -169,11 +169,15 @@ def placeorder(orderid2):
         username = session ['username']
         store = request.args.get("store")
         food = request.args.get("food")
-        cost = int(request.args.get("cost"))
-        offer = int(request.args.get("offer"))
-        period1 = int(request.args.get("period1"))
-        period2 = int(request.args.get("period2"))
         instructions = request.args.get("instructions")
+        try:
+            cost = float(request.args.get("cost"))
+            offer = float(request.args.get("offer"))
+            period1 = int(request.args.get("period1"))
+            period2 = int(request.args.get("period2"))
+        except:
+            flash("Order incomplete. Cost, Offer, and periods must all be numbers.")
+            return redirect ("/placeorder/" + str(db.get_id()))
         if (username == "" or store == "" or food == "" or cost == 0 or offer == 0 or period1 == 0 or period2 == 0 or (period1 < 1 or period1 > 10) or (period2 < 1 or period2 > 10) or instructions == ""):
             if (offer == 0):
                 flash ("Be Generous. Tip More than $0")
