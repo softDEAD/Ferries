@@ -210,7 +210,8 @@ def success(orderid):
 @app.route("/sample")
 @search
 def sample ():
-    return render_template("sample.html")
+    username2 = session ['username']
+    return render_template("sample.html", orderid = db.get_id(), username2 = username2)
 
 @app.route("/loadorders/<id2>")
 @search
@@ -226,28 +227,36 @@ def loadorder(id2):
         db.add_comment(comment, id2, session['username'])
         comment = ""
         return redirect ("/loadorders/" + str(id2))
-    if ('username' in session ):
+    if ('username' in session and session ['username'] != data ['username'] ):
         username2 = session ['username']
         takenby = data ['takenby']
     else:
         takenby= True
     if (takenby == ""):
         taken = request.args.get("Take Order")
-        if (taken == "taken"):
+        if (taken == "Take Order"):
+            username2 = session ['username']
+
             db.take_order(username2, id2)
             return redirect ("/loadorders/" + str(id2))
-    elif (takenby == db.get_order_data(id2, 'takenby') and session['username'] == data ['username']):
+    elif (takenby != "" and session['username'] == data ['username']):
         fulfillable = True
         fulfilled = False
         ofilled = request.args.get ("Order Has Fulfilled")
-        if (ofilled == "fill"):
+        if (ofilled == "Order Has Been Fulfilled"):
             orders = db.order_fulfill(id2)
             fulfilled = True
             fulfillable = False
+            username2 = session['username'] 
+        if (fulfilled == True):
+            fulfillable = False
+
             return render_template ("loadorder.html", fulfillable = fulfillable, fulfilled = fulfilled, takenby = takenby, username2= username2, data = data, orderid = orderid )
     else:
         fulfillable = False
         fulfilled = False
+    if (fulfilled == True):
+        fulfillable = False
     username2 = session['username']    
     return render_template ("loadorder.html", fulfillable = fulfillable, fulfilled = fulfilled, takenby = takenby, username2 = username2, data = data, orderid = orderid )
 
