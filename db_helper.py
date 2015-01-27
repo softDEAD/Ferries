@@ -1,7 +1,11 @@
-from pymongo import MongoClient
+#from pymongo import MongoClient
+from pymongo import Connection
 
-client = MongoClient()
-db = client.account_manager
+#client = MongoClient()
+#db = client.account_manager
+
+conn = Connection()
+db = conn['accountinfo']
 
 users = db.users
 orders = db.orders
@@ -48,14 +52,12 @@ def user_creat(username, password): #string, string
     return "Registration failed; Username taken"
 
 def change_frees(username, frees): #string, list
-    user = users.find_one({'username':username})
     users.update(
         {'username' : username},
         {"$set" : {'frees':frees}},
         upsert = True)
 
 def change_lunch(username, lunch): #string, int
-    user = users.find_one({'username':username})
     users.update(
         {'username' : username},
         {"$set" : {'lunch':lunch}},
@@ -70,12 +72,8 @@ def get_user_data(username, data): #string, string
 
 def get_all_user_data(username): #string
     user = users.find_one({'username':username})
-    ret = {}
-    if (user != None):
-        for var in user:
-            if (var != "password"): #privacy is cool
-                ret[var] = user[var]
-    return ret
+    user.pop("password", None) #privacy is cool
+    return user
 
 def profile_comment(username, comment): #string, string
     users.update(
@@ -84,19 +82,15 @@ def profile_comment(username, comment): #string, string
     )
 
 def plus_rep(username):
-    user = users.find_one({'username':username})
-    newrep = user['rep']+1
     users.update(
         {'username' : username},
-        {"$set" : {'rep':newrep}},
+        {"$set" : {'rep':user['rep']+1}},
         upsert = True)
 
 def minus_rep(username):
-    user = users.find_one({'username':username})
-    newrep = user['rep']-1
     users.update(
         {'username' : username},
-        {"$set" : {'rep':newrep}},
+        {"$set" : {'rep':user['rep']-1}},
         upsert = True)
 
 #-----ORDERS-----
@@ -121,8 +115,8 @@ def order_creat(orderid, username, store, food, cost,
     )
     orders.insert(new)
     ################################spammable??
-    return "Order #%s created"%(orderid)
-
+    print "Order #%s created"%(orderid)
+    
 def get_order_data(orderid, data): #int, string
     order = orders.find_one({'orderid':orderid})
     if (order != None):
@@ -131,12 +125,7 @@ def get_order_data(orderid, data): #int, string
     return "No %s data for order %d."%(data,orderid)
 
 def get_all_order_data(orderid): #int
-    order = orders.find_one({'orderid':orderid})
-    ret = {}
-    if (order != None):
-        for var in order:
-            ret[var] = order[var]
-    return ret
+    return orders.find_one({'orderid':orderid})
 
 def get_orders(store = '', period = 0): #string, int
     ret = [] #returns list of orderids
@@ -168,7 +157,6 @@ def order_fulfill(orderid): #int
     orders.remove(order)
 
 def take_order(username, orderid): #string, string
-    user = users.find_one({'username':username})
     order = orders.find_one({'orderid':orderid})
     if order['takenby'] != '':
         return "Order already taken by %s"%(order['takenby'])
@@ -181,6 +169,7 @@ def take_order(username, orderid): #string, string
         {"$set" : {'takenby':username}},
         upsert = True)
     return "Order taken"
+
 
 def add_comment(comment, orderid):
     orders.update(

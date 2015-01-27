@@ -25,33 +25,36 @@ def search(func):
             loggedin = False
         if(searchsubmit == "Search" and search != ""):
             if (select == "Period"):
-                orders2 = db.get_orders ([], [int(search)])
+                orders2 = db.get_orders ('', int(search))
+                print (orders2)
             elif (select == "Store"):
-                orders2 = db.get_orders ([str(search)], [])
+                orders2 = db.get_orders (str(search), 0)
             else:
                 return redirect("/profile/" + str(search))
         
-            return render_template("index.html", orders = orders2, username2=username2,loggedin=loggedin)
+            return redirect("/")
         else:
             return func(*args,**kwargs)
     return inner
+
 
 @app.route("/", methods = ["POST", "GET"])
 @search
 def index():
     global orderid
     global orders2
+    print (orders2)
     if(request.method=="POST"):
         submit = request.form["submit"]
         if (submit == "Search"):
             return redirect("/results")
     if ('username' not in session or session.get('username') == None):
         loggedin = False
-        return render_template ("index.html", loggedin = loggedin)
+        return render_template ("index.html", orders2 = orders2, orderid = db.get_id(), loggedin = loggedin)
     else:
         loggedin = True
         username2 = session.get('username')
-        return render_template ("index.html", orders2 = orders2, orderid = orderid, loggedin = loggedin, username2 = username2)
+        return render_template ("index.html", orders2 = orders2, orderid = db.get_id(), loggedin = loggedin, username2 = username2)
 
 
 
@@ -106,7 +109,40 @@ def profile(username):
     if ('username' in session):
         username2 = session ['username']
         data = db.get_all_user_data (username)
-        return render_template ("profile.html", username2 = username2, data = data, orderid = orderid)
+        if (username == username2):
+            myprofile = True
+        else:
+            myprofile = False
+        
+        submit = request.args.get("frees")
+        submit1 = request.args.get("lunch")
+        submit2 = request.args.get("repup")
+        submit3 = request.args.get("repdown")
+        submit4 = request.args.get("submitc")
+        submit5 = request.args.get("comment")
+
+        if (submit == "submit"):
+            frees = request.args.get("fname")
+            db.change_frees(username, frees)
+            return redirect("/profile/" + str(username))
+        if (submit1 == "submit"):
+            lunch = request.args.get("lname")
+            db.change_lunch(username, lunch)
+            return redirect("/profile/" + str(username))
+
+        if (submit2 == "RepUp"):
+            db.plus_rep(username)
+            return redirect("/profile/" + str(username))
+
+        if (submit3 == "RepDown"):
+            db.minus_rep(username)
+            return redirect("/profile/" + str(username))
+
+        if (submit4 == "submit" and submit5 != "" ):
+            db.profile_comment(username, str(username) + " says: " + submit5)
+            return redirect("/profile/" + str(username))
+            
+        return render_template ("profile.html", myprofile = myprofile, username2 = username2, data = data, orderid = orderid)
     else:
         flash ("You are not logged in")
         return redirect ("/")
@@ -121,7 +157,6 @@ def placeorder(orderid2):
     global orderid
     submit = request.args.get("submit")
     if (submit == "Submit"):
-        orderid2 = orderid
         username = session ['username']
         store = request.args.get("store")
         food = request.args.get("food")
@@ -132,11 +167,9 @@ def placeorder(orderid2):
         instruction = request.args.get("instruction")
         if (username == "" or store == "" or food == "" or cost == 0 or offer == 0 or period1 == 0 or period2 == 0 or instruction == ""):
             flash("Order incomplete")
-            return redirect ("/placeorder/" + str(orderid))
+            return redirect ("/placeorder/" + str(db.get_id()))
         else:
             db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instruction)
-            tmp = orderid2
-            db.up_id()
             username = ""
             store = ""
             food = ""
@@ -145,17 +178,18 @@ def placeorder(orderid2):
             period1 = 0 
             period2 = 0
             instruction = "" 
-            return redirect ("/success/" + str(tmp))
+            return redirect ("/success/" + str(db.get_id() ))
     if ('username' in session):
         username2 = session ['username']
         data = {'username':username2}
-        return render_template ("orders.html", username2 = username2, data = data, orderid = orderid2);
+        return render_template ("orders.html", username2 = username2, data = data, orderid = db.get_id());
     else:
         return render_template ("/login")
            
 @app.route("/success/<orderid>")
 @search
 def success(orderid):
+    db.up_id()
     username = session ['username']
     data = []
     data.append (username)
@@ -164,15 +198,15 @@ def success(orderid):
 @app.route("/loadorders/<id2>")
 @search
 def loadorder(id2):
+    id2 = int(id2)
     data = db.get_all_order_data(id2);
-    print (data)
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
     if (submitc == "Submit" and comment != ""):
         db.add_comment(comment, id2)
         comment = ""
         return redirect ("/loadorders/" + str(id2))
-    if ('username' in session and session['username'] != data ['username']):
+    if ('username' in session ):
         username2 = session ['username']
         takenby = data ['takenby']
     else:
@@ -182,7 +216,7 @@ def loadorder(id2):
         if (taken == "taken"):
             db.take_order(username2, id2)
             return redirect ("/loadorders/" + str(id2))
-    elif (takenby == db.get_order_data(id2, 'takenby') and session['username'] == data ['username'] and fulfilled == False):
+    elif (takenby == db.get_order_data(id2, 'takenby') and session['username'] == data ['username']):
         fulfillable = True
         fulfilled = False
         ofilled = request.args.get ("Order Has Fulfilled")

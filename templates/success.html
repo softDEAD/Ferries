@@ -4,11 +4,10 @@
 Success
 {% endblock title %}
 {% block header %}
-Success- Order# {{orderid}} Placed
+<b>Success- Order# {{orderid}} Placed </b>
 {% endblock header %}
-
+<br>
 {% block body %}
- <a href="/loadorders/{{orderid}}">Click Here to Look at Order</a> 
-
+<h3> <a href="/loadorders/{{orderid}}">Click Here to Look at Order</a> </h3>
 {% endblock body %}
 
