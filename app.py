@@ -115,6 +115,9 @@ def register():
 @app.route("/profile/<username>", methods = ["POST", "GET"])
 @search
 def profile(username):
+    if (username == None or not db.get_all_order_data(int(username))):
+        flash("invalid page")
+        return redirect("/")
     if ('username' in session):
         username2 = session ['username']
         data = db.get_all_user_data (username)
@@ -160,6 +163,9 @@ def profile(username):
 @app.route("/placeorder/<orderid2>", methods = ["POST", "GET"])
 @search
 def placeorder(orderid2):
+    if (orderid2 == None or not db.get_all_order_data(int(orderid2))):
+        flash("invalid page")
+        return redirect("/")
     if ('username' not in session or session ['username'] == None):
         flash ("You are not logged in")
         return redirect ("/")
@@ -211,6 +217,9 @@ def placeorder(orderid2):
 @app.route("/success/<orderid>")
 @search
 def success(orderid):
+    if (orderid == None or not db.get_all_order_data(int(orderid))):
+        flash("invalid page")
+        return redirect("/")
     if ('username' in session):
         username2 = session ['username']
         data = []
@@ -231,6 +240,9 @@ def sample ():
 @app.route("/loadorders/<id2>")
 @search
 def loadorder(id2):
+    if (id2 == None or not db.get_all_order_data(int(id2))):
+        flash("invalid page")
+        return redirect("/")
     if ('username' not in session):
         id2 = int(id2)
         data = db.get_all_order_data(id2)
