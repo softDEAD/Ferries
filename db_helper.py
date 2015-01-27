@@ -16,7 +16,14 @@ def up_id():
     f = open('orderid.txt', 'w')
     f.write(str(i))
     f.close()
-    
+
+def get_id():
+    f = open('orderid.txt')
+    for line in f.readlines():
+        i = int(line.strip())
+    f.close()
+    return i
+
 #-----USERNAMES-----
 def user_auth(username, password): #string, string
     return users.find({'username':username, 'password':password}).count() == 1
