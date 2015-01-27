@@ -176,8 +176,9 @@ def placeorder(orderid2):
         period2 = int(request.args.get("period2"))
         instructions = request.args.get("instructions")
         if (username == "" or store == "" or food == "" or cost == 0 or offer == 0 or period1 == 0 or period2 == 0 or (period1 < 1 or period1 > 10) or (period2 < 1 or period2 > 10) or instructions == ""):
-
-            flash("Order incomplete")
+            if (offer == 0):
+                flash ("Be Generous. Tip More than $0")
+            flash("Order incomplete. Field Not filled, Period less than 0 or greater than 10 and/or Offer or Cost = 0")
             return redirect ("/placeorder/" + str(db.get_id()))
         else:
             db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instructions)
@@ -202,9 +203,12 @@ def placeorder(orderid2):
 @app.route("/success/<orderid>")
 @search
 def success(orderid):
-    username2 = session ['username']
-    data = []
-    data.append (username2)
+    if ('username' in session):
+        username2 = session ['username']
+        data = []
+        data.append (username2)
+    else:
+        username2 = ""
     return render_template ("success.html", username2 = username2, data = data, orderid = orderid)
 
 @app.route("/sample")

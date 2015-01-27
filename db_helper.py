@@ -157,6 +157,7 @@ def order_fulfill(orderid): #int
         {'username' : user},
         {"$push" : {'ordersfulfilled':int(orderid)}},
     )
+    orders.remove(order)
     return "Order Fulfilled"
 
 def take_order(username, orderid): #string, string
