@@ -48,28 +48,36 @@ def user_creat(username, password): #string, string
     return "Registration failed; Username taken"
 
 def change_frees(username, frees): #string, list
-    user = users.find_one({'username':username})
+    cursor = users.find_one({'username':username})
+    for item in cursor:
+        user = item
     users.update(
         {'username' : username},
         {"$set" : {'frees':frees}},
         upsert = True)
 
 def change_lunch(username, lunch): #string, int
-    user = users.find_one({'username':username})
+    cursor = users.find_one({'username':username})
+    for item in cursor:
+        user = item
     users.update(
         {'username' : username},
         {"$set" : {'lunch':lunch}},
         upsert = True)
     
 def get_user_data(username, data): #string, string
-    user = users.find_one({'username':username})
+    cursor = users.find_one({'username':username})
+    for item in cursor:
+        user = item
     if (user != None):
         if data in user:
             return user[data]
     return "No %s data for user %s."%(data,username)
 
 def get_all_user_data(username): #string
-    user = users.find_one({'username':username})
+    cursor = users.find_one({'username':username})
+    for item in cursor:
+        user = item
     ret = {}
     if (user != None):
         for var in user:
@@ -84,7 +92,9 @@ def profile_comment(username, comment): #string, string
     )
 
 def plus_rep(username):
-    user = users.find_one({'username':username})
+    cursor = users.find_one({'username':username})
+    for item in cursor:
+        user = item
     newrep = user['rep']+1
     users.update(
         {'username' : username},
@@ -92,7 +102,9 @@ def plus_rep(username):
         upsert = True)
 
 def minus_rep(username):
-    user = users.find_one({'username':username})
+    cursor = users.find_one({'username':username})
+    for item in cursor:
+        user = item
     newrep = user['rep']-1
     users.update(
         {'username' : username},
@@ -124,14 +136,18 @@ def order_creat(orderid, username, store, food, cost,
     return "Order #%s created"%(orderid)
 
 def get_order_data(orderid, data): #int, string
-    order = orders.find_one({'orderid':orderid})
+    cursor = orders.find({'orderid':orderid})
+    for item in cursor:
+        order = item
     if (order != None):
         if data in order:
             return order[data]
     return "No %s data for order %d."%(data,orderid)
 
 def get_all_order_data(orderid): #int
-    order = orders.find_one({'orderid':orderid})
+    cursor = orders.find({'orderid':orderid})
+    for item in cursor:
+        order = item
     ret = {}
     if (order != None):
         for var in order:
@@ -157,7 +173,9 @@ def get_orders(store = '', period = 0): #string, int
 
 def order_fulfill(orderid): #int
     #username is the person who fulfilled order
-    order = orders.find_one({'orderid':orderid})
+    cursor = orders.find({'orderid':orderid})
+    for item in cursor:
+        order = item
     user = order['takenby']
     if not user_exists(user):
         return "Error, user not found"
@@ -168,8 +186,12 @@ def order_fulfill(orderid): #int
     orders.remove(order)
 
 def take_order(username, orderid): #string, string
-    user = users.find_one({'username':username})
-    order = orders.find_one({'orderid':orderid})
+    cursor = users.find_one({'username':username})
+    for item in cursor:
+        user = item
+    cursor = orders.find({'orderid':orderid})
+    for item in cursor:
+        order = item
     if order['takenby'] != '':
         return "Order already taken by %s"%(order['takenby'])
     users.update(
