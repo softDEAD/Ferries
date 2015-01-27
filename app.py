@@ -202,6 +202,8 @@ def loadorder(id2):
     data = db.get_all_order_data(id2);
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
+    fulfillable = False
+    fulfilled = False
     if (submitc == "Submit" and comment != ""):
         db.add_comment(comment, id2)
         comment = ""
