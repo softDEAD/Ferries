@@ -105,7 +105,7 @@ def order_creat(orderid, username, store, food, cost,
             'preferredperiod' : preferredperiod,
             'otherperiods' : otherperiods,
             'instructions' : instructions,
-            'takenby' : None, #when taken by someone (if not None) it displays as 'Taken by %s'
+            'takenby' : '', #when taken by someone it displays as 'Taken by %s'
             'comments' : []
             }
     users.update(
@@ -167,7 +167,7 @@ def order_fulfill(orderid): #int
 def take_order(username, orderid): #string, string
     user = users.find_one({'username':username})
     order = orders.find_one({'orderid':orderid})
-    if order['takenby'] != None:
+    if order['takenby'] != '':
         return "Order already taken by %s"%(order['takenby'])
     users.update(
         {'username' : username},
