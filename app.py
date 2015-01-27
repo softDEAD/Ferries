@@ -7,7 +7,7 @@ import yelp
 app=Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
-orderid = 0
+orderid = db.get_id()
 id = 0
 
 def search(func):
@@ -16,14 +16,14 @@ def search(func):
         select = request.args.get("select")
         search = request.args.get("search")
         searchsubmit = request.args.get("searchsubmit")
-        if(searchsubmit == "Search"): 
+        if(searchsubmit == "Search" and search != ""): 
             if (select == "Period"):
-                orders = db.get_orders ([], [int(search)])
+                orders2 = db.get_orders ([], [int(search)])
             elif (select == "Store"):
-                orders = db.get_orders ([str(search)], [])
+                orders2 = db.get_orders ([str(search)], [])
             else:
                 return redirect("/profile/" + str(search))
-            return render_template ("index.html", orderid = orderid, orders = orders);
+            return render_template ("index.html", orderid = orderid, orders = orders2);
         else:
             return func(*args,**kwargs)
     return inner
@@ -42,6 +42,7 @@ def index():
     else:
         loggedin = True
         username2 = session.get('username')
+        
         return render_template ("index.html", orderid = orderid, loggedin = loggedin, username2 = username2)
 
 @app.route("/login", methods = ["POST", "GET"])
@@ -71,13 +72,13 @@ def login():
 def register():
     if (session.get('username') != None):
         flash ("You are already logged in!")
-        return redirect ("/profile")
+        return redirect ("/")
     register = request.args.get("register")
     if (register == "Register"):
         username = request.args.get("username")
         password = request.args.get("password")
-        does_account_exist = db.user_auth(username, password)
-        if (does_account_exist == True):
+        does_account_exist = db.user_exists(username)
+        if (does_account_exist):
             flash("Account already exists") #tried registering with taken username (None, None) is not a valid user/pass combo
             return redirect("/register")
         elif (len(username)<6):
@@ -103,6 +104,7 @@ def profile(username):
 @app.route("/placeorder/<orderid2>", methods = ["POST", "GET"])
 @search
 def placeorder(orderid2):
+    global orderid
     submit = request.args.get("submit")
     if (submit == "Submit"):
         orderid2 = orderid
@@ -120,7 +122,7 @@ def placeorder(orderid2):
         else:
             db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instruction)
             tmp = orderid2
-            orderid = int(orderid) + 1
+            db.up_id()
             username = ""
             store = ""
             food = ""
@@ -145,17 +147,13 @@ def success(orderid):
     data.append (username)
     return render_template ("success.html", data = data, orderid = orderid)
 
-
-@app.route("/loadorders/<id2>")
-@search
-def loadorder(id2):
 @app.route("/loadorders/<id2>")
 @search
 def loadorder(id2):
     data = db.get_all_order_data(id2);
+    print (data)
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
-    
     if (submitc == "Submit" and comment != ""):
         db.add_comment(comment, id2)
         comment = ""
@@ -182,8 +180,8 @@ def loadorder(id2):
     else:
         fulfillable = False
         fulfilled = False
-        
-    return render_template ("loadorder.html", fulfillable = fulfillable, fulfilled = fulfilled, takenby = takenby, username2= username2, data = data, orderid = orderid )
+    username2 = session['username']    
+    return render_template ("loadorder.html", fulfillable = fulfillable, fulfilled = fulfilled, takenby = takenby, username2 = username2, data = data, orderid = orderid )
 
 
 @app.route("/logout")

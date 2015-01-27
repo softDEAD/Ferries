@@ -16,7 +16,7 @@ Preferred Period: {{data ['preferredperiod']}} <br>
 Alternate Period: {{data ['otherperiods']}} <br>
 Instructions: {{data ['instructions']}}<br>
 
-
+<form>
 
 {% if takenby %}
 Order Taken By: {{data['takenby']}}
@@ -41,6 +41,7 @@ Order has been Fulfilled
 <input type="submit" class="btn btn-success" name="submitc" value="Submit">
 <br>
 
+</form>
 {% for i in range(data ['comments']|length) %}
 <br>
 {{data['comments'][i]}}
