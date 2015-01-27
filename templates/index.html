@@ -60,7 +60,7 @@
   {% if messages %}
   <ul class="flashed_messages_list">
     {% for message in messages %}
-    <li class="flashed_message error">{{ message }}</li>
+   <div class="alert alert-info" role="alert"> <li class="flashed_message error">{{ message }}</li></div>
     {% endfor %}  </ul>
   {% endif %}
   {% endwith %}
