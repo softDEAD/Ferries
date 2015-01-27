@@ -149,16 +149,42 @@ def success(orderid):
 @app.route("/loadorders/<id2>")
 @search
 def loadorder(id2):
+@app.route("/loadorders/<id2>")
+@search
+def loadorder(id2):
     data = db.get_all_order_data(id2);
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
+    
     if (submitc == "Submit" and comment != ""):
         db.add_comment(comment, id2)
         comment = ""
         return redirect ("/loadorders/" + str(id2))
-    if ('username' in session):
+    if ('username' in session and session['username'] != data ['username']):
         username2 = session ['username']
-    return render_template ("loadorder.html", username2= username2, data = data, orderid = orderid )
+        takenby = data ['takenby']
+    else:
+        takenby= True
+    if (takenby == ""):
+        taken = request.args.get("Take Order")
+        if (taken == "taken"):
+            db.take_order(username2, id2)
+            return redirect ("/loadorders/" + str(id2))
+    elif (takenby == db.get_order_data(id2, 'takenby') and session['username'] == data ['username'] and fulfilled == False):
+        fulfillable = True
+        fulfilled = False
+        ofilled = request.args.get ("Order Has Fulfilled")
+        if (ofilled == "fill"):
+            orders = db.order_fulfill(id2)
+            fulfilled = True
+            fulfillable = False
+            return render_template ("loadorder.html", fulfillable = fulfillable, fulfilled = fulfilled, takenby = takenby, username2= username2, data = data, orderid = orderid )
+    else:
+        fulfillable = False
+        fulfilled = False
+        
+    return render_template ("loadorder.html", fulfillable = fulfillable, fulfilled = fulfilled, takenby = takenby, username2= username2, data = data, orderid = orderid )
+
 
 @app.route("/logout")
 @search
@@ -172,28 +198,30 @@ def logout():
 @search
 def results():
     results={};
-    if request.method=='POST':
+    try:
+        #geo = request.form['geo'];
+        #term= request.form['term'];
+        geo=False;
+        term = "sushi";
+    except:
+        flash("Please enter a term");
+        return render_template("results.html",results=results);
+    if(geo):
+        lat = request.form["lat"];
+        lon = request.form["lon"];
+    else:
         try:
-            #geo = request.form['geo'];
-            term= request.form['term'];
-            geo=False;
-            #term = "sushi";
+            for i in request.form:
+                flash(i);
+            loc = request.form["loc"];
+            loc="brooklyn";
+            results = yelp.search(term,loc);
+            if(results==None):
+                flash("No results came up");
+            return jsonify(results);
         except:
-            flash("Please enter a term");
-            return render_template("results.html",results=results);
-        if(geo):
-            lat = request.form["lat"];
-            lon = request.form["lon"];
-        else:
-            try:
-                loc = request.form["loc"];
-                #loc="brooklyn";
-                results = yelp.search(term,loc);
-                if(results==None):
-                    flash("No results came up");
-            except:
-                flash("Please enter a location or check automatic");
-                flash("fail");
+            flash("Please enter a location or check automatic");
+    flash("fail");
     return render_template("results.html",results=results);
 
 
