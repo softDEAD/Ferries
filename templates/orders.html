@@ -1,0 +1,38 @@
+{% extends "loggedinbase.html" %}
+{% block title %}
+Orders
+{% endblock title %}
+{% block header %}
+<div class="container">
+  <div class="jumbotron">
+<b>Orders ID# {{orderid}} </b> </div> </div>
+{% endblock header %}
+{% block body %}
+
+<div class="col-lg-7 col-lg-offset-3 jumbotron">
+<h3> <b>Username: {{data ['username']}} </b></h3>
+
+<h4>
+<form class="form_control" style="width:600px">
+  <br>
+Order ID #: {{orderid}} <br>
+Store Name:<br>
+  <input type="text" class="form-control" name="store" placeholder="Store"> <br>
+Requested Food:<br>
+<input type="text" class="form-control" name="food" placeholder="Chicken"> <br>
+Price for Food: <br>
+  <input type="text" class="form-control" name="cost" placeholder="1.00"> <br>  
+Offer for Servive: <br>
+<input type="text" class="form-control" name="offer" placeholder="2.00"> <br>
+ 
+Free Period: <br>
+  <input type="text" class="form-control" name="period1" placeholder="Free Period"><br>
+Alternate Free Period:<br>
+  <input type="text" class="form-control" name="period2" placeholder="Alternate Free Period"><br>
+Instructions for Deliverer: <br>
+ <textarea rows="5" type="text" class="form-control" name="instructions" placeholder="Instructions!"></textarea>
+<br>
+  <input type="submit" class="btn btn-success" name="submit" value="Submit">
+</form> </h4>
+</div> 
+{% endblock body %}

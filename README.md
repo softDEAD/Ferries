@@ -1,4 +1,4 @@
-Ferries
+Ferries- CAN  SOMEONE FIX THE SEARCH BAR, I REFUSE TO WORK ON IT ANYMORE         http://us19.chatzy.com/88599764098063 JOIN THIS CHAT ROOM
 ====
 
 ##Description
@@ -28,7 +28,7 @@ Ferries
  * by 1/12 - Order database
   * order_creat(orderid,username, store, food, cost, offer, preferredperiod, otherperiods, instructions)
   * get_orders(stores,periods)
- * ??any other stuff
+ * TENTATIVE - editing and adding functionality to database as required and requested by others
 * David Bang
  * by 1/11 - Set up framework for login, register, account specific pages
  * by 1/13 - Connect pages with databases

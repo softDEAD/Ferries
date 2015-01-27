@@ -1,0 +1,93 @@
+{% extends "loggedinbase.html" %}
+{% block title %}
+User Profile {{data['username']}}
+{% endblock title %}
+{% block header %}
+Profile: {{data ['username']}}
+{% endblock header %}
+{% block body %}
+
+<div class="col-lg-3 col-lg-offset-2 jumbotron">
+<h3><b> Username: {{data['username']}}</b> </h3>
+<br>
+
+<h4>
+<b>Frees:</b> <br>
+{% for i in range(data['frees']|length) %}
+{{ data['frees'][i] }}
+{% endfor %}
+<br>
+{% if myprofile %}
+
+<form>
+<input type="text" class="form-control" name="fname" placeholder="changefrees">
+<input type="submit" class="btn btn-default" name="frees" value="submit"></form>
+<br>
+{% endif %}
+
+
+<b>Lunch:</b><br>
+{{data ['lunch']}}
+{% if myprofile %}
+<form>
+<input type="text" class="form-control" name="lname" placeholder="changelunch">
+<input type="submit" class="btn btn-primary" name="lunch" value="submit" id="lunch"></form>
+{% endif %}
+
+<br> <br>
+<b>Reputation: </b><br> 
+{{data ['rep']}}<br> <br>
+{% if myprofile %}
+<br>
+{% else %}
+<form>
+<input type="submit" class="btn btn-default" name="repup" style="background-color:lightgreen" value="RepUp" id="repup">+1
+<input type="submit" class="btn btn-default" name="repdown" style="background-color:red" value="RepDown">-1</form>
+{% endif %}
+</div>
+
+<div class="col-lg-4 col-lg-offset-1 jumbotron">
+<h3>
+<b>Pending Orders:</b><br>
+</h3><h4>
+{% for i in range(data['pendingorders']|length) %}
+
+<a href="/loadorders/{{data['pendingorders'][i]}}"> Order ID# {{ data['pendingorders'][i] }} 
+</a> <br>
+{% endfor %}
+<br></h4>
+
+<h3> <b>Placed Orders:</b></h3><br> <h4>
+{% for i in range(data ['ordersplaced']|length) %}
+
+<a href="/loadorders/{{data['ordersplaced'][i]}}"> Order ID#{{ data['ordersplaced'][i] }} </a> <br>
+{% endfor %}
+</h4>
+
+<br> <h3> <b>
+Fulfilled Orders: </h3> </b><br> <h4>
+{% for i in range(data['ordersfulfilled']|length) %}
+<a href="/loadorders/{{data['ordersfulfilled'][i]}}"> Order ID#{{ data['ordersfulfilled'][i] }} </a> <br>
+{% endfor %} </h4>
+<br><h3> <b>
+Profile Comments:</b> </h3> <h4>
+{% for i in range(data['profilecomments']|length) %}
+<br>{{ data['profilecomments'][i] }}
+{% endfor %} </h4>
+<br>
+</h4>
+<form>
+<textarea rows="5" type="text" class="form-control" style="width:300px" name="comment" placeholder="Write a comment"></textarea>
+<br>
+<input type="submit" class="btn btn-success" name="submitc" value="submit">
+<br>
+</form>
+</h3>
+</div>
+
+{% endblock body %}
+
+
+
+
+
