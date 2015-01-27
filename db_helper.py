@@ -49,6 +49,7 @@ def user_creat(username, password): #string, string
 
 def change_frees(username, frees): #string, list
     cursor = users.find_one({'username':username})
+    user = None
     for item in cursor:
         user = item
     users.update(
@@ -58,6 +59,7 @@ def change_frees(username, frees): #string, list
 
 def change_lunch(username, lunch): #string, int
     cursor = users.find_one({'username':username})
+    user = None
     for item in cursor:
         user = item
     users.update(
@@ -67,6 +69,7 @@ def change_lunch(username, lunch): #string, int
     
 def get_user_data(username, data): #string, string
     cursor = users.find_one({'username':username})
+    user = None
     for item in cursor:
         user = item
     if (user != None):
@@ -76,6 +79,7 @@ def get_user_data(username, data): #string, string
 
 def get_all_user_data(username): #string
     cursor = users.find_one({'username':username})
+    user = None
     for item in cursor:
         user = item
     ret = {}
@@ -93,6 +97,7 @@ def profile_comment(username, comment): #string, string
 
 def plus_rep(username):
     cursor = users.find_one({'username':username})
+    user = None
     for item in cursor:
         user = item
     newrep = user['rep']+1
@@ -103,6 +108,7 @@ def plus_rep(username):
 
 def minus_rep(username):
     cursor = users.find_one({'username':username})
+    user = None
     for item in cursor:
         user = item
     newrep = user['rep']-1
@@ -137,6 +143,7 @@ def order_creat(orderid, username, store, food, cost,
 
 def get_order_data(orderid, data): #int, string
     cursor = orders.find({'orderid':orderid})
+    order = None
     for item in cursor:
         order = item
     if (order != None):
@@ -146,6 +153,7 @@ def get_order_data(orderid, data): #int, string
 
 def get_all_order_data(orderid): #int
     cursor = orders.find({'orderid':orderid})
+    order = None
     for item in cursor:
         order = item
     ret = {}
@@ -174,6 +182,7 @@ def get_orders(store = '', period = 0): #string, int
 def order_fulfill(orderid): #int
     #username is the person who fulfilled order
     cursor = orders.find({'orderid':orderid})
+    order = None
     for item in cursor:
         order = item
     user = order['takenby']
@@ -187,9 +196,11 @@ def order_fulfill(orderid): #int
 
 def take_order(username, orderid): #string, string
     cursor = users.find_one({'username':username})
+    user = None
     for item in cursor:
         user = item
     cursor = orders.find({'orderid':orderid})
+    order = None
     for item in cursor:
         order = item
     if order['takenby'] != '':
