@@ -8,6 +8,58 @@ Results
 {% endblock header %}
 
 {% block body %}
+<form method="POST" class="form-inline" id="search-form" align="center">
+  <div class="form-group">
+    <input type="text" id="term" name="term" placeholder="Term">
+  </div>
+  <div class="form-group">
+    <input type="text" id="loc" name="loc" placeholder="Location">
+    <label class="checkbox">
+      Automatic?<input type="checkbox" name="geo" id="geo">
+    </label>
+  </div> 
+  <button type="button" class="btn btn-default" name="submit" value="Search" id="Search">Search</button>
+</form>
+<div id="result">
+  {% if results != None %}
+  <ul>
+    {% for i in results["businesses"] %}
+    <ul class="list-inline">
+      <li>
+	<a href={{i["url"]}}>
+	  <img alt={{i["name"]}}  height="90" width="90" src = {{i["image_url"]}}>
+	</a>
+      </li>
+      <li>
+	<a href={{i["url"]}}>
+	  {{i["name"]}}<br>
+	</a>
+      </li>
+      <li>
+	Phone Number: {{i["display_phone"]}}<br>
+	Neighborhood: {{i["location"]["display_address"][-2]}}<br>
+	Address:
+	{% for h in i["location"]["display_address"][:-2] %}   
+	{{h}}<br>
+	{% endfor %}
+	{{i["location"]["display_address"][-1]}}
+      </li>
+      {% endfor %}
+      {% endif %}
+    </ul>
+  </ul>
+</div>
+{% endblock body %}
+{% extends "base.html" %}
+
+{% block title %}
+Search Results
+{% endblock title %}
+{% block header %}
+Results
+{% endblock header %}
+
+{% block body %}
 {% if results != None %}
 <ul>
   {% for i in results["businesses"] %}
@@ -35,4 +87,5 @@ Results
     {% endif %}
   </ul>
 </ul>
+<script src="rscript.js"></script>
 {% endblock body %}

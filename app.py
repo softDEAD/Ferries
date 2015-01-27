@@ -171,15 +171,32 @@ def logout():
 @app.route("/results", methods=["POST", "GET"])
 @search
 def results():
-    if(request.method=="POST"):
-        term = request.form["term"];
-        loc = request.form["loc"];
-        results = yelp.search(term,loc);
-        if(results==None):
-            flash("No results came up")
-        return render_template ("results.html",results=results)
+    results={};
+    try:
+        #geo = request.form['geo'];
+        #term= request.form['term'];
+        geo=False;
+        term = "sushi";
+    except:
+        flash("Please enter a term");
+        return render_template("results.html",results=results);
+    if(geo):
+        lat = request.form["lat"];
+        lon = request.form["lon"];
     else:
-        return render_template("results.html", results=None)
+        try:
+            for i in request.form:
+                flash(i);
+            loc = request.form["loc"];
+            loc="brooklyn";
+            results = yelp.search(term,loc);
+            if(results==None):
+                flash("No results came up");
+            return jsonify(results);
+        except:
+            flash("Please enter a location or check automatic");
+    flash("fail");
+    return render_template("results.html",results=results);
 
 
 if __name__ == '__main__':
