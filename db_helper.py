@@ -132,19 +132,33 @@ def get_all_order_data(orderid): #int
 def get_orders(store = '', period = 0): #string, int
     ret = [] #returns list of orderids
     if store == '':
-        porders = orders.find({'period':period})
-        for order in porders:
+        print "GETTING PERIODS"
+        porders1 = orders.find({'preferredperiod':period})
+        porders2 = orders.find({'otherperiods':period})
+        for order in porders1:
+            ret.append(order['orderid'])
+        for order in porders2:
             ret.append(order['orderid'])
     elif period == 0:
+        print "GETTING STORES"
         sorders = orders.find({'store':store})
         for order in sorders:
             ret.append(order['orderid'])
     else:
-        psorders = orders.find({'store':store,
-                                'period':period})
-        for order in psorders:
+        psorders1 = orders.find({'preferredperiod':period,
+                                 'store':store})
+        psorders2 = orders.find({'otherperiods':period,
+                                 'store':store})
+        for order in psorders1:
             ret.append(order['orderid'])
-    return ret
+        for order in psorders2:
+            ret.append(order['orderid'])
+    ret2 = []
+    for orderid in ret:
+        if orderid not in ret2:
+            ret2.append(orderid)
+    return ret2
+
 
 def order_fulfill(orderid): #int
     #username is the person who fulfilled order
