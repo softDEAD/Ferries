@@ -135,10 +135,29 @@ def profile(username):
 
         if (submit == "submit"):
             frees = request.args.get("fname")
+            l = frees.split(",")
+            l2 = []
+            for item in l:
+                l2.append(item.strip())
+            err = False
+            for item in l2:
+                if (type(item) is not int):
+                    err = True
+            if err:
+                flash("Invalid frees")
+                return redirect("/profile/" + str(username))
             db.change_frees(username, frees)
             return redirect("/profile/" + str(username))
         if (submit1 == "submit"):
             lunch = request.args.get("lname")
+            try:
+                lunch = int(lunch)
+                if (lunch < 4 or lunch > 8):
+                    flash("Invalid lunch")
+                    return redirect("/profile/" + str(username))
+            except:
+                flash("Invalid lunch")
+                return redirect("/profile/" + str(username))
             db.change_lunch(username, lunch)
             return redirect("/profile/" + str(username))
 
