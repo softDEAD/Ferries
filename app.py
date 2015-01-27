@@ -10,10 +10,28 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 orderid = 0
 id = 0
 
+def search(func):
+    @wraps(func)
+    def inner(*args,**kwargs):
+        select = request.args.get("select")
+        search = request.args.get("search")
+        searchsubmit = request.args.get("searchsubmit")
+        if(searchsubmit == "searchsubmit"): 
+            if (select == "Period"):
+                orders = db.get_orders (0, search)
+            elif (select == "Store"):
+                orders = db.get_orders (search, 0)
+            else:
+                return redirect("/profile/" + str(search))
+            return render_template ("index.html", orders == orders);
+        else:
+            return func(*args,**kwargs)
+    return inner
+
 @app.route("/", methods = ["POST", "GET"])
+@search
 def index():
     global orderid
-    orderid = orderid + 1
     if(request.method=="POST"):
         submit = request.form["submit"]
         if (submit == "Search"):
@@ -23,10 +41,11 @@ def index():
         return render_template ("index.html", loggedin = loggedin)
     else:
         loggedin = True
-        username = session.get('username')
-        return render_template ("index.html", loggedin = loggedin, username = username)
+        username2 = session.get('username')
+        return render_template ("index.html", loggedin = loggedin, username2 = username2)
 
 @app.route("/login", methods = ["POST", "GET"])
+@search
 def login():
     if ('username' not in session):
         session ['username'] = None
@@ -48,6 +67,7 @@ def login():
     return render_template ("login.html")
 
 @app.route("/register", methods = ["POST", "GET"])
+@search
 def register():
     if (session.get('username') != None):
         flash ("You are already logged in!")
@@ -70,6 +90,7 @@ def register():
     return render_template ("register.html") #have a button that redirects to /
 
 @app.route("/profile/<username>", methods = ["POST", "GET"])
+@search
 def profile(username):
     if ('username' in session):
         username2 = session ['username']
@@ -80,6 +101,7 @@ def profile(username):
 
 
 @app.route("/placeorder/<orderid2>", methods = ["POST", "GET"])
+@search
 def placeorder(orderid2):
     global orderid
     submit = request.args.get("submit")
@@ -99,7 +121,7 @@ def placeorder(orderid2):
         else:
             db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instruction)
             tmp = orderid2
-            orderid = int (orderid2) + 1
+            orderid = int(orderid) + 1
             username = ""
             store = ""
             food = ""
@@ -117,6 +139,7 @@ def placeorder(orderid2):
         return render_template ("/login")
            
 @app.route("/success/<orderid>")
+@search
 def success(orderid):
     username = session ['username']
     data = []
@@ -125,6 +148,7 @@ def success(orderid):
 
 
 @app.route("/loadorders/<id2>")
+@search
 def loadorder(id2):
     data = db.get_all_order_data(id2);
     comment = request.args.get("comment")
@@ -137,22 +161,8 @@ def loadorder(id2):
         username2 = session ['username']
     return render_template ("loadorder.html", username2= username2, data = data, orderid = orderid )
 
-@app.route("/orderspec", methods=["POST", "GET"])
-def specorder(): ## one is null or not
-    select = request.args.get("select")
-    search = request.args.get("search")
-    searchsubmit = request.args.get("searchsubmit")
-
-    if(searchsubmit == "searchsubmit"): 
-        if (select == "Period"):
-            orders = db.get_orders (0, search)
-        elif (select == "Store"):
-            orders = db.get_orders (search, 0)
-        else:
-            return redirect("/oprofile/" + str(search))
-    return render_template ("specorder.html", orders == orders);
-
 @app.route("/logout")
+@search
 def logout():
     session.pop('username', None)
     flash('You are logged out')
@@ -160,6 +170,7 @@ def logout():
 
 
 @app.route("/results", methods=["POST", "GET"])
+@search
 def results():
     if(request.method=="POST"):
         term = request.form["term"];

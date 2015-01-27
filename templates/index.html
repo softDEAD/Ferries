@@ -37,7 +37,7 @@
     {% if loggedin %}
     <ul class="nav navbar-right"><li>
       <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="out">Log Out</button></li>
-      <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="userb"> {{username}}</button></li> 
+      <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="userb"> {{username2}}</button></li> 
  <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="placeorder"> Place Order</button></li> </ul>
     {% else %}
     <ul class="nav navbar-right"><li>
@@ -74,12 +74,12 @@
       </div>
     </div>
   </div>
-  {% for o in range(orderids|length) %}
+  {% for o in range(orders|length) %}
   <div class="col-sm-8 col-md-6">
     <div class="thumbnail">
       <img src="..." alt="..." class="img-thumbnail">
       <div class="caption">
-        <h3>Order {{orderids[o]}}</h3>
+        <h3>Order {{orders[o]}}</h3>
       </div>
     </div>
   </div>
