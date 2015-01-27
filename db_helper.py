@@ -156,10 +156,14 @@ def get_all_order_data(orderid): #int
     order = None
     for item in cursor:
         order = item
+    print "ORDER:\n"
+    print order
     ret = {}
     if (order != None):
         for var in order:
             ret[var] = order[var]
+    print  "RET:\n"
+    print ret
     return ret
 
 def get_orders(store = '', period = 0): #string, int
