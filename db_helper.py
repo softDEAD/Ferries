@@ -171,10 +171,10 @@ def take_order(username, orderid): #string, string
     return "Order taken"
 
 
-def add_comment(comment, orderid):
+def add_comment(comment, orderid, username):
     orders.update(
         {'orderid' : orderid},
-        {"$push" : {'comments':comment}},
+        {"$push" : {'comments':[username, comment]}},
     )
     return "Comment added"
 

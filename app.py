@@ -205,7 +205,7 @@ def loadorder(id2):
     fulfillable = False
     fulfilled = False
     if (submitc == "Submit" and comment != ""):
-        db.add_comment(comment, id2)
+        db.add_comment(comment, id2, session['username'])
         comment = ""
         return redirect ("/loadorders/" + str(id2))
     if ('username' in session ):
