@@ -2,7 +2,10 @@ Ferries
 ====
 
 ##Description
- This ingenious project works to matches people's food orders with potential delivery people. When you want to get food from outside but don't want to get up. You can post a listing on this site that asks for someone to deliver popcorn chicken from Ferries. Users will see the listing and if they can fulfill the order they will message the listing's poster and negotiate the delivery fee. The chosen delivery person will bring the food to the appointed time and location and be reimbursed for cost and labour.
+ This ingenious project works to matches people's food orders with potential delivery people. When you want to get food from outside but don't want to go and get it yourelf, you can post a listing on this site that asks for someone to deliver food such as popcorn chicken from Ferries. Users will see the listing and if they can fulfill the order they will message the listing's poster and negotiate the delivery fee or accept the offer that is given. The chosen delivery person will bring the food to the appointed time and location and be reimbursed for cost and labour.
+
+##Youtube Link
+to be added
  
 ###Work in your branch not in master
 
@@ -12,10 +15,10 @@ Ferries
 
 ##Roles:
 =====
-* Flask - David Bang
-* Javascript - Anish Malhotra
-* Database - Eric Kolbusz
-* API - Dionis Wang
+* Python Flask, CSS, HTML- David Bang
+* Javascript & Video Editor - Anish Malhotra
+* Database (Mongo) - Eric Kolbusz
+* API (Yelp)- Dionis Wang
 
 ##Todo Timeline:
 =======
@@ -32,30 +35,41 @@ Ferries
 * David Bang
  * by 1/11 - Set up framework for login, register, account specific pages
  * by 1/13 - Connect pages with databases
- * ??any other stuff
+ * by 1/16- have profile and user pages ready
+ * by 1/20- Order pages and routingready. Place Orders, Accept Orders, Etc.
+ * by 1/23- Css (Bootstrap)
+ * by 1/25 -Connecting Javascript with Pages
 * Dionis Wang
  * Start API after login is done.
  * Finish API by 1/18
+ * Yelp Api
+ * Table Display or Search Results
+ * Possible Geolocation?
 * Anish Malhotra
  * Javascript after others are done
+ * Videos
+ * 
 ##APIs
 * Google Maps
 * Flask -
 * Database -
 * JavaScript -
 * Html & CSS -
-####these aren't APIs what
 
-##Has:
-* user login
+##Features:
+* user accounts and login
+* Commenting
 * Google maps, yelp? Recommend places based on interests
 * Allow users to add request for food.
-* Allow users to post
+* Allow users to post reponses and requests
 * User profiles with rep and comments
+* Make easy money if you have alot of free time
 
 
 ##Project Deadline: soon
 =========
 
 ##Install Instructions:
+Install Mongo, Flask
+
 ========
