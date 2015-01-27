@@ -2,3 +2,4 @@ Flask
 gunicorn
 Mongo
 ajax
+oauth2
