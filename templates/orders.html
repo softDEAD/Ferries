@@ -3,22 +3,29 @@
 Orders
 {% endblock title %}
 {% block header %}
-Orders
+Orders ID {{orderid}}
 {% endblock header %}
 {% block body %}
 
-<form class="form_control">
-  <input type="text" class="form-control" name="username" placeholder="Username">
+Username: {{data ['username']}}
+
+<form class="form_control" style="width:600px">
   <br>
 Order ID #: {{orderid}} <br>
+Store Name:<br>
   <input type="text" class="form-control" name="store" placeholder="Store"> <br>
+Requested Food:<br>
 <input type="text" class="form-control" name="food" placeholder="Chicken"> <br>
-
+Price for Food: <br>
   <input type="text" class="form-control" name="cost" placeholder="1.00"> <br>  
+Offer for Servive: <br>
 <input type="text" class="form-control" name="offer" placeholder="2.00"> <br>
-  <br>
+ 
+Free Period: <br>
   <input type="text" class="form-control" name="period1" placeholder="Free Period"><br>
+Alternate Free Period:<br>
   <input type="text" class="form-control" name="period2" placeholder="Alternate Free Period"><br>
+Instructions for Deliverer: <br>
  <textarea rows="5" type="text" class="form-control" name="instructions" placeholder="Instructions!"></textarea>
 <br>
   <input type="submit" class="btn btn-success" name="submit" value="Submit">
