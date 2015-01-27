@@ -17,11 +17,23 @@ Alternate Period: {{data ['otherperiods']}} <br>
 Instructions: {{data ['instructions']}}<br>
 
 
+
 {% if takenby %}
 Order Taken By: {{data['takenby']}}
 {% else %}
-<button type="button" class="btn btn-default" style="background-color:lightgreen" id="takeorder">Take Order</button>
+
+<input="submit" class="btn btn-default" style="background-color:lightgreen" name="Take Order" value="taken" id="takeorder">
 {% endif %}
+
+{% if fulfillable %}
+<input="submit" class="btn btn-default" style="background-color:lightgreen" name="Order Has Fulfilled" value="fill">
+{% endif %}
+
+{% if fulfilled %}
+Order has been Fulfilled
+{% endif %}
+
+
 
 <br> Comments: <br>
  <textarea rows="5" type="text" class="form-control" name="comment" placeholder="Write a comment"></textarea>
