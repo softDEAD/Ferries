@@ -115,7 +115,7 @@ def register():
 @app.route("/profile/<username>", methods = ["POST", "GET"])
 @search
 def profile(username):
-    if (username == None or not db.user_exist(username)):
+    if (username == None):
         flash("invalid page")
         return redirect("/")
     if ('username' in session):
@@ -163,7 +163,7 @@ def profile(username):
 @app.route("/placeorder/<orderid2>", methods = ["POST", "GET"])
 @search
 def placeorder(orderid2):
-    if (orderid2 == None or not db.get_all_order_data(orderid2)):
+    if (orderid2 == None):
         flash("invalid page")
         return redirect("/")
     if ('username' not in session or session ['username'] == None):
@@ -217,7 +217,7 @@ def placeorder(orderid2):
 @app.route("/success/<orderid>")
 @search
 def success(orderid):
-    if (orderid == None or not db.get_all_order_data(orderid)):
+    if (orderid == None):
         flash("invalid page")
         return redirect("/")
     if ('username' in session):
@@ -240,7 +240,7 @@ def sample ():
 @app.route("/loadorders/<id2>")
 @search
 def loadorder(id2):
-    if (id2 == None or not db.get_all_order_data(id2)):
+    if (id2 == None):
         flash("invalid page")
         return redirect("/")
     if ('username' not in session):
