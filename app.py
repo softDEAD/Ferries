@@ -221,8 +221,8 @@ def results():
             flash("Please enter a term.");
             return render_template("results.html",results=results);
         if(geo):
-            lat = request.form["lat"];
-            lon = request.form["lon"];
+            lat = float(request.form["lat"]);
+            lon = float(request.form["lon"]);
             results=yelp.searchbound(term,float(lat),float(lon));
         else:
             loc = request.form["loc"];
