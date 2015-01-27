@@ -41,10 +41,10 @@ to be added
  * by 1/25 -Connecting Javascript with Pages
 * Dionis Wang
  * Start API after login is done.
- * Finish API by 1/18
+ * Finish API by 1/18 -> 1/25
  * Yelp Api
  * Table Display or Search Results
- * Possible Geolocation?
+ * Possible Geolocation with Yelp (scrapped could not get request to go through)
 * Anish Malhotra
  * Javascript after others are done
  * Videos
@@ -70,6 +70,6 @@ to be added
 =========
 
 ##Install Instructions:
-Install Mongo, Flask
+Install Mongo, Flask, oauhth2(pip install)
 
 ========
