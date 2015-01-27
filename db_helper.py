@@ -138,25 +138,21 @@ def get_all_order_data(orderid): #int
             ret[var] = order[var]
     return ret
 
-def get_orders(stores, periods): #list, list
+def get_orders(store = '', period = 0): #string, int
     ret = [] #returns list of orderids
-    if len(stores) == 0:
-        for period in periods:
-            porders = orders.find({'period':period})
+    if store == '':
+        porders = orders.find({'period':period})
         for order in porders:
             ret.append(order['orderid'])
-    elif len(periods) == 0:
-        for store in stores:
-            sorders = orders.find({'store':stores})
-            for order in sorders:
-                ret.append(order['orderid'])
+    elif period == 0:
+        sorders = orders.find({'store':store})
+        for order in sorders:
+            ret.append(order['orderid'])
     else:
-        for store in stores:
-            for period in periods:
-                psorders = orders.find({'store':store,
-                                      'period':period})
-                for order in psorders:
-                    ret.append(order['orderid'])
+        psorders = orders.find({'store':store,
+                                'period':period})
+        for order in psorders:
+            ret.append(order['orderid'])
     return ret
 
 def order_fulfill(orderid): #int
