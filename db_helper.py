@@ -6,6 +6,17 @@ db = client.account_manager
 users = db.users
 orders = db.orders
 
+#-----CHANGING ORDERID-----(you'd be kidding if you told me this was the best way to do this)
+def up_id():
+    f = open('orderid.txt')
+    for line in f.readlines():
+        i = int(line.strip())
+    f.close()
+    i = i+1
+    f = open('orderid.txt', 'w')
+    f.write(str(i))
+    f.close()
+    
 #-----USERNAMES-----
 def user_auth(username, password): #string, string
     return users.find({'username':username, 'password':password}).count() == 1
@@ -65,7 +76,22 @@ def profile_comment(username, comment): #string, string
         {"$push" : {'profilecomments':comment}},
     )
 
-    
+def plus_rep(username):
+    user = users.find_one({'username':username})
+    newrep = user['rep']+1
+    users.update(
+        {'username' : username},
+        {"$set" : {'rep':newrep}},
+        upsert = True)
+
+def minus_rep(username):
+    user = users.find_one({'username':username})
+    newrep = user['rep']-1
+    users.update(
+        {'username' : username},
+        {"$set" : {'rep':newrep}},
+        upsert = True)
+
 #-----ORDERS-----
 def order_creat(orderid, username, store, food, cost,
                 offer, preferredperiod,
