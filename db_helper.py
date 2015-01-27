@@ -121,7 +121,8 @@ def get_order_data(orderid, data): #int, string
     return "No %s data for order %d."%(data,orderid)
 
 def get_all_order_data(orderid): #int
-    return orders.find_one({'orderid':orderid})
+    order = orders.find_one({'orderid':orderid})
+    return order
 
 def get_orders(store = '', period = 0): #string, int
     ret = [] #returns list of orderids
