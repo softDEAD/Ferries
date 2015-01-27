@@ -142,20 +142,20 @@ def get_orders(stores, periods): #list, list
     ret = [] #returns list of orderids
     if len(stores) == 0:
         for period in periods:
-            orders = orders.find({'period':period})
-        for order in orders:
+            porders = orders.find({'period':period})
+        for order in porders:
             ret.append(order['orderid'])
     elif len(periods) == 0:
         for store in stores:
-            orders = orders.find({'store':stores})
-            for order in orders:
+            sorders = orders.find({'store':stores})
+            for order in sorders:
                 ret.append(order['orderid'])
     else:
         for store in stores:
             for period in periods:
-                orders = orders.find({'store':store,
+                psorders = orders.find({'store':store,
                                       'period':period})
-                for order in orders:
+                for order in psorders:
                     ret.append(order['orderid'])
     return ret
 
