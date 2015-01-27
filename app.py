@@ -31,7 +31,6 @@ def search(func):
                         flash ("Invalid Period")
                     else:
                         orders2 = db.get_orders ('', int(period))
-                        print(orders2)
                 except:
                     flash ("Invalid Period")
             elif (select == "Store"):
@@ -219,12 +218,20 @@ def success(orderid):
 @app.route("/sample")
 @search
 def sample ():
-    username2 = session ['username']
-    return render_template("sample.html", orderid = db.get_id(), username2 = username2)
+    if ('username' in session):
+        username2 = session ['username']
+        return render_template("sample.html", orderid = db.get_id(), username2 = username2)
+    else:
+       return render_template("sample.html", orderid = db.get_id())
 
 @app.route("/loadorders/<id2>")
 @search
 def loadorder(id2):
+    if ('username' not in session):
+        id2 = int(id2)
+        data = db.get_all_order_data(id2)
+        return render_template ("loadorder.html", fulfillable = False, fulfilled = False, takenby = "", data = data, orderid = orderid )
+
     id2 = int(id2)
     data = db.get_all_order_data(id2)
     print data
