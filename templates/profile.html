@@ -22,9 +22,10 @@ Frees: <br>
 <form>
 <input type="text" class="form-control" name="fname" placeholder="changefrees">
 <input type="submit" class="btn btn-default" name="frees" value="submit"></form>
+<br>
 {% endif %}
 
-<br>
+
 Lunch:<br>
 {{data ['lunch']}}
 {% if myprofile %}
@@ -40,8 +41,8 @@ Reputation: <br>
 <br>
 {% else %}
 <form>
-<input type="submit" class="btn btn-default" name="repup" style="background-color:lightgreen" value="submit" id="repup">+1
-<input type="submit" class="btn btn-default" name="repdown" style="background-color:red" value="submit" id="repdown">-1</form>
+<input type="submit" class="btn btn-default" name="repup" style="background-color:lightgreen" value="RepUp" id="repup">+1
+<input type="submit" class="btn btn-default" name="repdown" style="background-color:red" value="RepDown">-1</form>
 {% endif %}
 </div>
 
@@ -49,21 +50,21 @@ Reputation: <br>
 <h3>
 Pending Orders:<br>
 {% for i in range(data['pendingorders']|length) %}
-<br>
-<a href="/loadorder/{{data['pendingorders'][i]}}"> Order ID# {{ data['pendingorders'][i] }} 
-</a>
+
+<a href="/loadorders/{{data['pendingorders'][i]}}"> Order ID# {{ data['pendingorders'][i] }} 
+</a> <br>
 {% endfor %}
 <br>
 
 Placed Orders:<br>
 {% for i in range(data ['ordersplaced']|length) %}
-<br>
-<a href="/loadorder/{{data['ordersplaced'][i]}}"> Order ID#{{ data['ordersplaced'][i] }} </a>
+
+<a href="/loadorders/{{data['ordersplaced'][i]}}"> Order ID#{{ data['ordersplaced'][i] }} </a> <br>
 {% endfor %}
 <br>
 Fulfilled Orders:<br>
 {% for i in range(data['ordersfulfilled']|length) %}
-<br><a href="/loadorder/{{data['ordersfulfilled'][i]}}"> Order ID#{{ data['ordersfulfilled'][i] }} </a>
+<a href="/loadorders/{{data['ordersfulfilled'][i]}}"> Order ID#{{ data['ordersfulfilled'][i] }} </a> <br>
 {% endfor %}
 <br>
 Profile Comments:

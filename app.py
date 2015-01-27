@@ -126,16 +126,16 @@ def profile(username):
             db.change_lunch(username, lunch)
             return redirect("/profile/" + str(username))
 
-        if (submit2 == "submit"):
+        if (submit2 == "RepUp"):
             db.plus_rep(username)
             return redirect("/profile/" + str(username))
 
-        if (submit3 == "submit"):
+        if (submit3 == "RepDown"):
             db.minus_rep(username)
             return redirect("/profile/" + str(username))
 
         if (submit4 == "submit" and submit5 != "" ):
-            db.profile_comment(username, str(username) + "says: " + submit5)
+            db.profile_comment(username, str(username) + " says: " + submit5)
             return redirect("/profile/" + str(username))
             
         return render_template ("profile.html", myprofile = myprofile, username2 = username2, data = data, orderid = orderid)
@@ -243,7 +243,6 @@ def logout():
 @search
 def results():
     results={};
-<<<<<<< HEAD
     try:
         #geo = request.form['geo'];
         #term= request.form['term'];
@@ -268,7 +267,6 @@ def results():
         except:
             flash("Please enter a location or check automatic");
     flash("fail");
-=======
     error="";
     term="";
     loc="";
@@ -290,7 +288,6 @@ def results():
             results = yelp.search(term,loc);
     if(results==None):
         flash("No results came up");
->>>>>>> dionis
     return render_template("results.html",results=results);
 
 if __name__ == '__main__':
