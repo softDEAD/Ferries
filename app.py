@@ -20,6 +20,7 @@ def search(func):
         searchsubmit = request.args.get("searchsubmit")
         if ('username' in session and session.get('username') != None):
             loggedin = True
+            username2 = session['username'];
         else:
             loggedin = False
         if(searchsubmit == "Search" and search != ""):
@@ -30,7 +31,7 @@ def search(func):
             else:
                 return redirect("/profile/" + str(search))
         
-            return redirect(url_for('index'), orders2 = orders2)
+            return render_template("index.html", orders = orders2, username2=username2,loggedin=loggedin)
         else:
             return func(*args,**kwargs)
     return inner
@@ -50,7 +51,7 @@ def index():
     else:
         loggedin = True
         username2 = session.get('username')
-        return render_template ("index.html", orders2 = orders2 orderid = orderid, loggedin = loggedin, username2 = username2)
+        return render_template ("index.html", orders2 = orders2, orderid = orderid, loggedin = loggedin, username2 = username2)
 
 
 
@@ -210,32 +211,6 @@ def logout():
 @search
 def results():
     results={};
-<<<<<<< HEAD
-    try:
-        #geo = request.form['geo'];
-        #term= request.form['term'];
-        geo=False;
-        term = "sushi";
-    except:
-        flash("Please enter a term");
-        return render_template("results.html",results=results);
-    if(geo):
-        lat = request.form["lat"];
-        lon = request.form["lon"];
-    else:
-        try:
-            for i in request.form:
-                flash(i);
-            loc = request.form["loc"];
-            loc="brooklyn";
-            results = yelp.search(term,loc);
-            if(results==None):
-                flash("No results came up");
-            return jsonify(results);
-        except:
-            flash("Please enter a location or check automatic");
-    flash("fail");
-=======
     error="";
     term="";
     loc="";
@@ -248,7 +223,7 @@ def results():
         if(geo):
             lat = request.form["lat"];
             lon = request.form["lon"];
-            results=yelp.searchbound(term,lat,lon);
+            results=yelp.searchbound(term,float(lat),float(lon));
         else:
             loc = request.form["loc"];
             if(loc==""):
@@ -257,7 +232,6 @@ def results():
             results = yelp.search(term,loc);
     if(results==None):
         flash("No results came up");
->>>>>>> dionis
     return render_template("results.html",results=results);
 
 if __name__ == '__main__':
