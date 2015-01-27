@@ -70,6 +70,6 @@ to be added
 =========
 
 ##Install Instructions:
-Install Mongo, Flask, oauhth2(pip install)
+Install Mongo, Flask, oauth2(pip install)
 
 ========
