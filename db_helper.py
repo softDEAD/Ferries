@@ -1,7 +1,11 @@
-from pymongo import MongoClient
+#from pymongo import MongoClient
+from pymongo import Connection
 
-client = MongoClient()
-db = client.account_manager
+#client = MongoClient()
+#db = client.account_manager
+
+conn = Connection()
+db = conn['accountinfo']
 
 users = db.users
 orders = db.orders
@@ -111,8 +115,8 @@ def order_creat(orderid, username, store, food, cost,
     )
     orders.insert(new)
     ################################spammable??
-    return "Order #%s created"%(orderid)
-
+    print "Order #%s created"%(orderid)
+    
 def get_order_data(orderid, data): #int, string
     order = orders.find_one({'orderid':orderid})
     if (order != None):
@@ -165,6 +169,7 @@ def take_order(username, orderid): #string, string
         {"$set" : {'takenby':username}},
         upsert = True)
     return "Order taken"
+
 
 def add_comment(comment, orderid):
     orders.update(

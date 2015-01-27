@@ -197,8 +197,8 @@ def success(orderid):
 @app.route("/loadorders/<id2>")
 @search
 def loadorder(id2):
-    data = db.get_all_order_data(id2);
-    print data
+    id2 = int(id2)
+    data = db.get_all_order_data(id2)
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
     if (submitc == "Submit" and comment != ""):
@@ -207,6 +207,9 @@ def loadorder(id2):
         return redirect ("/loadorders/" + str(id2))
     if ('username' in session and (session['username'] != data ['username'])):
         username2 = session ['username']
+        print "<<<<<<<<<<<<<<<<<<\n"
+        for item in data:
+            print ">>>"+item+">>>"+data[item]+"<<<\n"
         takenby = data ['takenby']
     else:
         takenby= True
