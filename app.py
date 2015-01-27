@@ -50,7 +50,7 @@ def index():
     else:
         loggedin = True
         username2 = session.get('username')
-        return render_template ("index.html", orders2 = orders2 orderid = orderid, loggedin = loggedin, username2 = username2)
+        return render_template ("index.html", orders2 = orders2, orderid = orderid, loggedin = loggedin, username2 = username2)
 
 
 
@@ -105,7 +105,40 @@ def profile(username):
     if ('username' in session):
         username2 = session ['username']
         data = db.get_all_user_data (username)
-        return render_template ("profile.html", username2 = username2, data = data, orderid = orderid)
+        if (username == username2):
+            myprofile = True
+        else:
+            myprofile = False
+        
+        submit = request.args.get("frees")
+        submit1 = request.args.get("lunch")
+        submit2 = request.args.get("repup")
+        submit3 = request.args.get("repdown")
+        submit4 = request.args.get("submitc")
+        submit5 = request.args.get("comment")
+
+        if (submit == "submit"):
+            frees = request.args.get("fname")
+            db.change_frees(username, frees)
+            return redirect("/profile/" + str(username))
+        if (submit1 == "submit"):
+            lunch = request.args.get("lname")
+            db.change_lunch(username, lunch)
+            return redirect("/profile/" + str(username))
+
+        if (submit2 == "submit"):
+            db.plus_rep(username)
+            return redirect("/profile/" + str(username))
+
+        if (submit3 == "submit"):
+            db.minus_rep(username)
+            return redirect("/profile/" + str(username))
+
+        if (submit4 == "submit" and submit5 != "" ):
+            db.profile_comment(username, str(username) + "says: " + submit5)
+            return redirect("/profile/" + str(username))
+            
+        return render_template ("profile.html", myprofile = myprofile, username2 = username2, data = data, orderid = orderid)
     else:
         flash ("You are not logged in")
         return redirect ("/")

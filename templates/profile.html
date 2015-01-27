@@ -8,50 +8,77 @@ User Profile {{data['username']}}
 {% block body %}
 
 <div class="col-lg-3 col-lg-offset-2 jumbotron">
-{{data['username']}}
+<h3> Username: {{data['username']}} </h3>
 <br>
 
+<h4>
 Frees: <br>
 {% for i in range(data['frees']|length) %}
 {{ data['frees'][i] }}
 {% endfor %}
 <br>
-<button type="button" class="btn btn-default" id="frees">Edit Frees</button>
+{% if myprofile %}
+
+<form>
+<input type="text" class="form-control" name="fname" placeholder="changefrees">
+<input type="submit" class="btn btn-default" name="frees" value="submit"></form>
+{% endif %}
+
 <br>
 Lunch:<br>
 {{data ['lunch']}}
-<button type="button" class="btn btn-default" id="lunch">Edit Lunch</button>
-<br>
-Rep: <br>
-{{data ['rep']}}<br>
-<button type="button" class="btn btn-default" style="background-color:lightgreen" id="repup">+1</button>
-<button type="button" class="btn btn-default" style="background-color:red" id="repdown">-1</button>
+{% if myprofile %}
+<form>
+<input type="text" class="form-control" name="lname" placeholder="changelunch">
+<input type="submit" class="btn btn-primary" name="lunch" value="submit" id="lunch"></form>
+{% endif %}
 
+<br>
+Reputation: <br>
+{{data ['rep']}}<br>
+{% if myprofile %}
+<br>
+{% else %}
+<form>
+<input type="submit" class="btn btn-default" name="repup" style="background-color:lightgreen" value="submit" id="repup">+1
+<input type="submit" class="btn btn-default" name="repdown" style="background-color:red" value="submit" id="repdown">-1</form>
+{% endif %}
 </div>
 
 <div class="col-lg-4 col-lg-offset-1 jumbotron">
-Pending Orders:
+<h3>
+Pending Orders:<br>
 {% for i in range(data['pendingorders']|length) %}
 <br>
-{{ data['pendingorders'][i] }}
-
+<a href="/loadorder/{{data['pendingorders'][i]}}"> Order ID# {{ data['pendingorders'][i] }} 
+</a>
 {% endfor %}
 <br>
 
-Placed Orders:
+Placed Orders:<br>
 {% for i in range(data ['ordersplaced']|length) %}
-<br>{{ data['ordersplaced'][i] }}
+<br>
+<a href="/loadorder/{{data['ordersplaced'][i]}}"> Order ID#{{ data['ordersplaced'][i] }} </a>
 {% endfor %}
 <br>
-Fulfilled Orders:
+Fulfilled Orders:<br>
 {% for i in range(data['ordersfulfilled']|length) %}
-<br>{{ data['ordersfulfilled'][i] }}
+<br><a href="/loadorder/{{data['ordersfulfilled'][i]}}"> Order ID#{{ data['ordersfulfilled'][i] }} </a>
 {% endfor %}
 <br>
 Profile Comments:
 {% for i in range(data['profilecomments']|length) %}
 <br>{{ data['profilecomments'][i] }}
 {% endfor %}
+<br>
+</h4>
+<form>
+<textarea rows="5" type="text" class="form-control" style="width:300px" name="comment" placeholder="Write a comment"></textarea>
+<br>
+<input type="submit" class="btn btn-success" name="submitc" value="submit">
+<br>
+</form>
+</h3>
 </div>
 
 {% endblock body %}
