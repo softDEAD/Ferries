@@ -44,7 +44,7 @@ Order has been Fulfilled
 </form>
 {% for i in range(data ['comments']|length) %}
 <br>
-{{data['comments'][i][0]}}:  {{data['comments'][i][1]}}
+{{data['comments'][i][0]}} says: {{data['comments'][i][1]}}
 <br>
 {% endfor %}
 {% endblock body %}
