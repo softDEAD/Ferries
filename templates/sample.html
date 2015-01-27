@@ -1,0 +1,42 @@
+{% extends "loggedinbase.html" %}
+{% block title %}
+Order ID # 
+{% endblock title %}
+{% block header %}
+Order # 
+{% endblock header %}
+{% block body %}
+
+<h4><b> User</b>: John Smith<br>
+<b>Store</b>: McDonalds<br>
+<b>Food</b>: Hamburger<br>
+<b>Cost</b>: 2<br>
+<b>Offer</b>: 3<br>
+<b>Preferred Period</b>: 4 <br>
+<b>Alternate Period</b>: 5 <br>
+<b>Instructions</b>: Bring it to the gym<br> </h4>
+
+
+<div>
+<type="submit" class="btn btn-default" style="background-color:blue" name="Take Order" value="taken" id="takeorder">
+<b>Order Taken By</b>: Bob Doe
+</div>
+<div>
+<br>
+<type="submit" class="btn btn-default" style="background-color:lightgreen" name="Order Has Fulfilled" value="fill">
+
+<b> Order has been Fulfilled by Bob Doe</b>
+</div>
+<br>
+<type="submit" class="btn btn-default" style="background-color:red" name="Take Order" value="taken" id="takeorder">
+<br> <b>Comments</b>: <br>
+ <textarea rows="5" type="text" class="form-control" name="comment" placeholder="Write a comment"></textarea>
+<br>
+<input type="submit" class="btn btn-success" name="submitc" value="Submit">
+<br>
+
+</form>
+<br>davidbang says: I like cheese <br>
+We like cheese <br>
+{% endblock body %}
+

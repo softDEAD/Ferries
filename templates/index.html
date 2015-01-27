@@ -76,18 +76,19 @@
 <div id="clock"> </div>
 <br>
 <div class="row">
-  <a href="/loadorders/0"> 
+  <a href="/sample"> 
 <div class="col-sm-6 col-md-4">
-    <div class="thumbnail" id="box" onchange="showEffect()">
+    <div class="thumbnail">
       <img src="/static/F.jpg" alt="..." class="img-thumbnail">
       <div class="caption">
         <h3>Order Sample </h3>
       </div>
     </div></a>
   </div>
-  {% for o in range(orders|length) %}
+ {% if orders2 %}
+  {% for o in orders2 %}
   <a href="/loadorders/{{o}}"> <div class="col-sm-6 col-md-4">
-      <div class="thumbnail" id="box" onchange="showEffect()">
+      <div class="thumbnail">
 	<img src="/static/F.jpg" alt="..." class="img-thumbnail">
 	<div class="caption">
           <h3>Order ID# {{o}}</h3>
@@ -96,6 +97,8 @@
 </div>
   </a>
   {% endfor %}
-
+{% else %}
+  <h1><- Here is a sample page. Your search did not term up any matches </h1>
+{% endif %}
   </div>
 </body>

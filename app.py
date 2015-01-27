@@ -63,6 +63,7 @@ def index():
     else:
         loggedin = True
         username2 = session.get('username')
+        print(orders2)
         return render_template ("index.html", orders2 = orders2, orderid = db.get_id(), loggedin = loggedin, username2 = username2)
 
 
@@ -148,7 +149,7 @@ def profile(username):
             return redirect("/profile/" + str(username))
 
         if (submit4 == "submit" and submit5 != "" ):
-            db.profile_comment(username, str(username) + " says: " + submit5)
+            db.profile_comment(username, str(username2) + " says: " + submit5)
             return redirect("/profile/" + str(username))
             
         return render_template ("profile.html", myprofile = myprofile, username2 = username2, data = data, orderid = orderid)
@@ -180,6 +181,8 @@ def placeorder(orderid2):
             return redirect ("/placeorder/" + str(db.get_id()))
         else:
             db.order_creat(orderid, username, store, food, cost, offer, period1, period2, instructions)
+            db.up_id()
+
             username = ""
             store = ""
             food = ""
@@ -188,28 +191,33 @@ def placeorder(orderid2):
             period1 = 0 
             period2 = 0
             instructions = "" 
-            return redirect ("/success/" + str(db.get_id()))
+            return redirect ("/success/" + str(db.get_id() - 1))
     if ('username' in session):
         username2 = session ['username']
         data = {'username':username2}
-        return render_template ("orders.html", username2 = username2, data = data, orderid = db.get_id());
+        return render_template ("orders.html", username2 = username2, data = data, orderid = db.get_id() );
     else:
         return render_template ("/login")
            
 @app.route("/success/<orderid>")
 @search
 def success(orderid):
-    db.up_id()
-    username = session ['username']
+    username2 = session ['username']
     data = []
-    data.append (username)
-    return render_template ("success.html", data = data, orderid = orderid)
+    data.append (username2)
+    return render_template ("success.html", username2 = username2, data = data, orderid = orderid)
+
+@app.route("/sample")
+@search
+def sample ():
+    return render_template("sample.html")
 
 @app.route("/loadorders/<id2>")
 @search
 def loadorder(id2):
     id2 = int(id2)
     data = db.get_all_order_data(id2)
+    print data
     comment = request.args.get("comment")
     submitc = request.args.get("submitc")
     fulfillable = False
@@ -267,8 +275,8 @@ def results():
             flash("Please enter a term.");
             return render_template("results.html",results=results);
         if(geo):
-            lat = float(request.form["lat"]);
-            lon = float(request.form["lon"]);
+            lat = request.form["lat"];
+            lon = request.form["lon"];
             results=yelp.searchbound(term,float(lat),float(lon));
         else:
             loc = request.form["loc"];
