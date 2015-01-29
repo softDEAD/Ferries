@@ -340,7 +340,7 @@ def results():
     term="";
     loc="";
     loggedin=False;
-    if ('username' in session):
+    if ('username' in session and session['username'] != None):
         username2 = session ['username']
         loggedin= True;
     if request.method=='POST':
@@ -348,7 +348,7 @@ def results():
         term= request.form['term'];
         if(term==""):
             flash("Please enter a term.");
-            return render_template("results.html",loggedin=loggedin,username2=username2,results=results);
+            return render_template("results.html",orderid = orderid, loggedin=loggedin,username2=username2,results=results);
         if(geo):
             lat = request.form["lat"];
             lon = request.form["lon"];
@@ -357,11 +357,11 @@ def results():
             loc = request.form["loc"];
             if(loc==""):
                 flash("Please enter a location or check automatic");
-                return render_template("results.html",loggedin=loggedin,username2=username2,results=results);
+                return render_template("results.html",orderid = orderid, loggedin=loggedin,username2=username2,results=results);
             results = yelp.search(term,loc);
     if(results==None):
         flash("No results came up");
-    return render_template("results.html",loggedin=loggedin,username2=username2,results=results);
+    return render_template("results.html", orderid=orderid, loggedin=loggedin,username2=username2,results=results);
 
 if __name__ == '__main__':
     app.debug = True

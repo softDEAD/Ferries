@@ -17,7 +17,8 @@
    </div>
     <div class="col-lg-6">
       <div class="input-group" style="padding-top:10px">
-	<div class="input-group-btn"> <form>
+	<div class="input-group-btn"> 
+	  <form>
 	    <div class="input-group-btn select" id="select1">
 	      <select class="form-control" data-style="btn-info" style="height:40px;width:auto" data-style="btn-info" name="select" id="first">
 		<option value="Period"> Period </option>
@@ -27,18 +28,19 @@
 	    </div>
 	</div>
 	<input type="text" class="form-control" style="height:auto;width:auto" name="search" placeholder="Search">
-	  <input type="submit" class="btn btn-primary" name="searchsubmit" value="Search"></form>
+	  <input type="submit" class="btn btn-primary" name="searchsubmit" value="Search">
+	</form>
       </div>  
     </div>
       
     {% if loggedin %}
   <script src="static/script2.js"></script>
     <div class="nav navbar-right">
-     <button type="button" class="btn btn-default navbar-btn" id="out">Log Out</button>
-      <button type="button" class="btn btn-default navbar-btn" id="userb">{{username2}}</button> 
- <button type="button" class="btn btn-default navbar-btn" id="placeorder"> Place Order</button>
 <a href="/results"> <button type="button" class="btn btn-primary navbar-btn" id="yelp"> Search Up Stores</button> </a> 
-<div id="orderid" style="visibility:hidden">{{orderid}}</div>
+ <button type="button" class="btn btn-default navbar-btn" id="placeorder"> Place Order</button>
+   <button type="button" class="btn btn-default navbar-btn" id="userb">{{username2}}</button> 
+     <button type="button" class="btn btn-default navbar-btn" id="out">Log Out</button>
+<div id="orderid" style="visibility:hidden">{{orderid}}</div> </div>
     {% else %}
   <script src="static/script.js"></script>
 <p class="navbar-right">

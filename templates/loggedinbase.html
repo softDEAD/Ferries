@@ -11,51 +11,56 @@
   </head>
   <body>
     {% block navbar %}
-    <div class="navbar navbar-inverse">
-      <ul class="nav navbar-nav"><li>
-	  <a class="navbar-center" href="/">
-	    <img alt="Brand" style="height:30px;width:50px" src="../static/F.jpg">
-	  </a>
-	</li><li>
-	  <div class="col-lg-6">
-	    <div class="input-group" style="padding-top:10px">
-	      <div class="input-group-btn">   <form>
-		<div class="input-group-btn select" id="select1">
-		  <select class="form-control" data-style="btn-info" style="height:40px;width:auto" data-style="btn-info" name="select" id="first">
-		    <option value="Period"> Period </option>
-		    <option value="Store"> Store </option>
-		    <option value="User"> User </option>
-		  </select>
-		</div>
-	      </div>
-	      <input type="text" class="form-control" style="height:auto;width:auto" name="search" placeholder="Search">
-	      <span class="input-group-btn">
-		   <input type="submit" class="btn btn-primary" name="searchsubmit" value="Search">Search </form>
-	      </span>
+     <nav class="navbar navbar-inverse">
+   <div class="nav navbar-nav">
+     <div class="nav navbar-left">
+       <a class="navbar-center" href="/">
+	 <img alt="Brand" style="height:60px;width:88px;padding-top:10px;padding-left:10px" src="../static/F.jpg">
+       </a>
+     </div>
+   </div>
+    <div class="col-lg-6">
+      <div class="input-group" style="padding-top:10px">
+	<div class="input-group-btn"> 
+	  <form>
+	    <div class="input-group-btn select" id="select1">
+	      <select class="form-control" data-style="btn-info" style="height:40px;width:auto" data-style="btn-info" name="select" id="first">
+		<option value="Period"> Period </option>
+		<option value="Store"> Store </option>
+		<option value="User"> User </option>
+	      </select>
 	    </div>
-	  </div>
-	</li>
-      </ul>
-      <ul class="nav navbar-right"><li>
-	<li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="out">Log Out</button></li>   
-	<li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="userb">{{username2}}</button></li>
- <li class="navbar-right"><button type="button" class="btn btn-default navbar-btn" id="placeorder"> Place Order </button></li>  
- <li class="navbar-right"><a href="/results"<button type="button" class="btn btn-primary navbar-btn" id="yelp"> Search up Stores</button> </a></li> </ul>
+	</div>
+	<input type="text" class="form-control" style="height:auto;width:auto" name="search" placeholder="Search">
+	  <input type="submit" class="btn btn-primary" name="searchsubmit" value="Search">
+	</form>
+      </div>  
     </div>
- <div id="orderid" style="visibility:hidden">{{orderid}}</div>
-    {% endblock navbar %}
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul class="flashed_messages_list">
-      {% for message in messages %}
-      <li class="flashed_message error">{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    <center>
-      <h1>
-	{% block header %}
+      
+    <script src="static/script2.js"></script>
+    <div class="nav navbar-right">
+      <a href="/results"> <button type="button" class="btn btn-primary navbar-btn" id="yelp"> Search Up Stores</button> </a> 
+      <button type="button" class="btn btn-default navbar-btn" id="placeorder"> Place Order</button>
+      <button type="button" class="btn btn-default navbar-btn" id="userb">{{username2}}</button> 
+      <button type="button" class="btn btn-default navbar-btn" id="out">Log Out</button>
+      <div id="orderid" style="visibility:hidden">{{orderid}}</div> </div>
+ 
+
+  </div>
+</nav>
+
+{% endblock navbar %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flashed_messages_list">
+  {% for message in messages %}
+  <div class="alert alert-info" role="alert"> <li class="flashed_message error">{{ message }}</li></div>
+  {% endfor %}  </ul>
+{% endif %}
+{% endwith %}
+<center>
+  <h1>
+    {% block header %}
 	Title Page
 	{% endblock header %}
       </h1>
