@@ -1,11 +1,15 @@
 Ferries
 ====
 
-##Description
+##Description- Project Looks Better on FireFox
  This ingenious project works to matches people's food orders with potential delivery people. When you want to get food from outside but don't want to go and get it yourelf, you can post a listing on this site that asks for someone to deliver food such as popcorn chicken from Ferries. Users will see the listing and if they can fulfill the order they will message the listing's poster and negotiate the delivery fee or accept the offer that is given. The chosen delivery person will bring the food to the appointed time and location and be reimbursed for cost and labour.
+ 
 
 ##Youtube Link
 http://youtu.be/MrV8DIJJg70
+
+##Droplet Deployment
+http://104.236.234.13/
  
 ###Work in your branch not in master
 
@@ -71,5 +75,7 @@ http://youtu.be/MrV8DIJJg70
 
 ##Install Instructions:
 Install Mongo, Flask, oauth2(pip install)
+
+pip install -r requirements.txt in virtual env
 
 ========
