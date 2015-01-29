@@ -6,6 +6,9 @@ Ferries
 
 ##Youtube Link
 http://youtu.be/MrV8DIJJg70
+
+##Droplet Deployment
+http://104.236.234.13/
  
 ###Work in your branch not in master
 
@@ -71,5 +74,7 @@ http://youtu.be/MrV8DIJJg70
 
 ##Install Instructions:
 Install Mongo, Flask, oauth2(pip install)
+
+pip install -r requirements.txt in virtual env
 
 ========
