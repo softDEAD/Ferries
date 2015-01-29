@@ -138,10 +138,37 @@ def profile(username):
 
         if (submit == "submit"):
             frees = request.args.get("fname")
+            l = frees.split(",")
+            if (len(l) == 1 and ' ' in l[0]):
+                flash("Invalid frees, please separate frees by commas")
+                return redirect("/profile/" + str(username))
+            l2 = []
+            for item in l:
+                l2.append(item.strip())
+            err = False
+            try:
+                for item in l2:
+                    i = int(item)
+                    if (i < 1 or i > 10):
+                        err = True
+            except:
+                flash("Invalid frees, must be numbers")
+                return redirect("/profile/" + str(username))
+            if err:
+                flash("Invalid frees, must be between 1 and 10")
+                return redirect("/profile/" + str(username))
             db.change_frees(username, frees)
             return redirect("/profile/" + str(username))
         if (submit1 == "submit"):
             lunch = request.args.get("lname")
+            try:
+                lunch = int(lunch)
+                if (lunch < 4 or lunch > 8):
+                    flash("Invalid lunch")
+                    return redirect("/profile/" + str(username))
+            except:
+                flash("Invalid lunch")
+                return redirect("/profile/" + str(username))
             db.change_lunch(username, lunch)
             return redirect("/profile/" + str(username))
 
@@ -304,20 +331,24 @@ def logout():
     flash('You are logged out')
     return redirect("/")
 
-
 @app.route("/results", methods=["POST", "GET"])
 @search
 def results():
+    username2="";
     results={};
     error="";
     term="";
     loc="";
+    loggedin=False;
+    if ('username' in session):
+        username2 = session ['username']
+        loggedin= True;
     if request.method=='POST':
         geo = 1 == len(request.form.getlist('geo'));
         term= request.form['term'];
         if(term==""):
             flash("Please enter a term.");
-            return render_template("results.html",results=results);
+            return render_template("results.html",loggedin=loggedin,username2=username2,results=results);
         if(geo):
             lat = request.form["lat"];
             lon = request.form["lon"];
@@ -326,11 +357,11 @@ def results():
             loc = request.form["loc"];
             if(loc==""):
                 flash("Please enter a location or check automatic");
-                return render_template("results.html",results=results);
+                return render_template("results.html",loggedin=loggedin,username2=username2,results=results);
             results = yelp.search(term,loc);
     if(results==None):
         flash("No results came up");
-    return render_template("results.html",results=results);
+    return render_template("results.html",loggedin=loggedin,username2=username2,results=results);
 
 if __name__ == '__main__':
     app.debug = True
