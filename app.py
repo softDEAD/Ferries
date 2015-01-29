@@ -4,7 +4,10 @@ from functools import wraps
 import db_helper as db
 import yelp
 
+
 app=Flask(__name__)
+app.config['SECRET_KEY'] = "secret key"
+
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 orderid = db.get_id()
@@ -217,7 +220,7 @@ def placeorder(orderid2):
 @app.route("/success/<orderid>")
 @search
 def success(orderid):
-    if (orderid == None):
+    if (orderid == None or orderid == "" or not (orderid <= db.get_id())):
         flash("invalid page")
         return redirect("/")
     if ('username' in session):
@@ -240,7 +243,7 @@ def sample ():
 @app.route("/loadorders/<id2>")
 @search
 def loadorder(id2):
-    if (id2 == None):
+    if (id2 == None or id2 == ""):
         flash("invalid page")
         return redirect("/")
     if ('username' not in session):
