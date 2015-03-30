@@ -6,8 +6,8 @@ Ferries
  
 
 ##Youtube Link
-http://youtu.be/MrV8DIJJg70
-Longer video- https://www.youtube.com/watch?v=teVldHOTc60
+* http://youtu.be/MrV8DIJJg70
+* Longer video- https://www.youtube.com/watch?v=teVldHOTc60
 
 ##Droplet Deployment
 http://104.236.234.13/
