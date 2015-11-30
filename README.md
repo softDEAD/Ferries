@@ -11,6 +11,8 @@ Ferries
 
 ##Droplet Deployment
 http://104.236.234.13/
+
+Droplet has been taken down, deployment can be seen in last 2 minutes of longer video.
  
 ###Work in your branch not in master
 
@@ -71,12 +73,15 @@ http://104.236.234.13/
 * Make easy money if you have alot of free time
 
 
-##Project Deadline: soon
+##Project Deadline: Done
 =========
 
 ##Install Instructions:
-Install Mongo, Flask, oauth2(pip install)
+Install Mongo, Flask, oauth2(pip install) in virtual environment
+Helpful Guide to installing and activating virtual environment http://flask.pocoo.org/docs/0.10/installation/
 
-pip install -r requirements.txt in virtual env
+run `pip install -r requirements.txt` while in virtual env
+
+In the directory with app.py, run `python app.py` to launch application
 
 ========
